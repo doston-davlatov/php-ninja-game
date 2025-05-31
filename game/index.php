@@ -1,0 +1,35 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header('Location: ./login/');
+    exit;
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../src/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Black Ninja</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="result">
+            <div id="score"></div>
+            <div id="time"></div>
+        </div>
+        <canvas id="game" width="375" height="375"></canvas>
+        <div id="introduction">Tayoqni cho'zish uchun sichqonchani bosib turing</div>
+        <div id="perfect">Ajoyib</div>
+        <button id="restart">RESTART</button>
+    </div>
+    <script src="../src/js/main.js"></script>
+</body>
+
+</html>
