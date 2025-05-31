@@ -1,8 +1,10 @@
 <?php
 define("DB_SERVER", "localhost");
 define("DB_USERNAME", "root");
-define("DB_PASSWORD", value: "");
+define("DB_PASSWORD", "");
 define("DB_NAME", "ninja_db");
+
+date_default_timezone_set("Etc/GMT-5"); 
 
 class Database
 {

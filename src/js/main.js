@@ -1,4 +1,4 @@
-Optimize it again and write fetch('score.php', { method: post }) to send the user record to this score.php Array.prototype.last = function () {
+Array.prototype.last = function () {
     return this[this.length - 1];
 };
 Math.sinus = function (degree) {
@@ -41,6 +41,7 @@ const introductionElement = document.getElementById("introduction");
 const perfectElement = document.getElementById("perfect");
 const restartButton = document.getElementById("restart");
 const scoreElement = document.getElementById("score");
+
 function resetGame() {
     phase = "waiting";
     lastTimestamp = undefined;
@@ -71,6 +72,7 @@ function resetGame() {
     heroY = 0;
     draw();
 }
+
 function generateTree() {
     const minimumGap = 30;
     const maximumGap = 150;
@@ -84,6 +86,7 @@ function generateTree() {
     const color = treeColors[Math.floor(Math.random() * 3)];
     trees.push({ x, color });
 }
+
 function generatePlatform() {
     const minimumGap = 40;
     const maximumGap = 200;
@@ -99,7 +102,26 @@ function generatePlatform() {
         minimumWidth + Math.floor(Math.random() * (maximumWidth - minimumWidth));
     platforms.push({ x, w });
 }
+
+function saveScore() {
+    fetch('update_score.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `score=${score}`
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.message);
+        })
+        .catch(error => {
+            console.error('Error saving score:', error);
+        });
+}
+
 resetGame();
+
 window.addEventListener("keydown", function (event) {
     if (event.key == " ") {
         event.preventDefault();
@@ -107,6 +129,7 @@ window.addEventListener("keydown", function (event) {
         return;
     }
 });
+
 window.addEventListener("mousedown", function (event) {
     if (phase == "waiting") {
         lastTimestamp = undefined;
@@ -115,16 +138,19 @@ window.addEventListener("mousedown", function (event) {
         window.requestAnimationFrame(animate);
     }
 });
+
 window.addEventListener("mouseup", function (event) {
     if (phase == "stretching") {
         phase = "turning";
     }
 });
+
 window.addEventListener("resize", function (event) {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     draw();
 });
+
 window.addEventListener("touchstart", function (event) {
     if (phase == "waiting") {
         lastTimestamp = undefined;
@@ -133,12 +159,15 @@ window.addEventListener("touchstart", function (event) {
         window.requestAnimationFrame(animate);
     }
 });
+
 window.addEventListener("touchend", function (event) {
     if (phase == "stretching") {
         phase = "turning";
     }
 });
+
 window.requestAnimationFrame(animate);
+
 function animate(timestamp) {
     if (!lastTimestamp) {
         lastTimestamp = timestamp;
@@ -210,6 +239,7 @@ function animate(timestamp) {
             const maxHeroY =
                 platformHeight + 100 + (window.innerHeight - canvasHeight) / 2;
             if (heroY > maxHeroY) {
+                saveScore(); // Save the score when game ends
                 restartButton.style.display = "block";
                 return;
             }
@@ -222,6 +252,7 @@ function animate(timestamp) {
     window.requestAnimationFrame(animate);
     lastTimestamp = timestamp;
 }
+
 function thePlatformTheStickHits() {
     if (sticks.last().rotation != 90)
         throw Error(`Stick is ${sticks.last().rotation}°`);
@@ -239,6 +270,7 @@ function thePlatformTheStickHits() {
         return [platformTheStickHits, true];
     return [platformTheStickHits, false];
 }
+
 function draw() {
     ctx.save();
     ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
@@ -252,11 +284,13 @@ function draw() {
     drawSticks();
     ctx.restore();
 }
+
 restartButton.addEventListener("click", function (event) {
     event.preventDefault();
     resetGame();
     restartButton.style.display = "none";
 });
+
 function drawPlatforms() {
     platforms.forEach(({ x, w }) => {
         ctx.fillStyle = "black";
@@ -277,6 +311,7 @@ function drawPlatforms() {
         }
     });
 }
+
 function drawHero() {
     ctx.save();
     ctx.fillStyle = "black";
@@ -316,6 +351,7 @@ function drawHero() {
     ctx.fill();
     ctx.restore();
 }
+
 function drawRoundedRect(x, y, width, height, radius) {
     ctx.beginPath();
     ctx.moveTo(x, y + radius);
@@ -329,6 +365,7 @@ function drawRoundedRect(x, y, width, height, radius) {
     ctx.arcTo(x, y, x, y + radius, radius);
     ctx.fill();
 }
+
 function drawSticks() {
     sticks.forEach((stick) => {
         ctx.save();
@@ -342,6 +379,7 @@ function drawSticks() {
         ctx.restore();
     });
 }
+
 function drawBackground() {
     var gradient = ctx.createLinearGradient(0, 0, 0, window.innerHeight);
     gradient.addColorStop(0, "#BBD691");
@@ -352,6 +390,7 @@ function drawBackground() {
     drawHill(hill2BaseHeight, hill2Amplitude, hill2Stretch, "#659F1C");
     trees.forEach((tree) => drawTree(tree.x, tree.color));
 }
+
 function drawHill(baseHeight, amplitude, stretch, color) {
     ctx.beginPath();
     ctx.moveTo(0, window.innerHeight);
@@ -363,6 +402,7 @@ function drawHill(baseHeight, amplitude, stretch, color) {
     ctx.fillStyle = color;
     ctx.fill();
 }
+
 function drawTree(x, color) {
     ctx.save();
     ctx.translate(
@@ -388,6 +428,7 @@ function drawTree(x, color) {
     ctx.fill();
     ctx.restore();
 }
+
 function getHillY(windowX, baseHeight, amplitude, stretch) {
     const sineBaseY = window.innerHeight - baseHeight;
     return (
@@ -396,6 +437,7 @@ function getHillY(windowX, baseHeight, amplitude, stretch) {
         sineBaseY
     );
 }
+
 function getTreeY(x, baseHeight, amplitude) {
     const sineBaseY = window.innerHeight - baseHeight;
     return Math.sinus(x) * amplitude + sineBaseY;
