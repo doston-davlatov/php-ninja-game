@@ -19,7 +19,10 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 <body>
   <div class="container">
-    <div id="score"></div>
+    <div class="result">
+      <div id="score"></div>
+      <div id="time"></div>
+    </div>
     <canvas id="game" width="375" height="375"></canvas>
     <div id="introduction">Tayoqni cho'zish uchun sichqonchani bosib turing</div>
     <div id="perfect">Ajoyib</div>

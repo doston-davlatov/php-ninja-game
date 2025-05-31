@@ -4,6 +4,8 @@ Array.prototype.last = function () {
 Math.sinus = function (degree) {
     return Math.sin((degree / 180) * Math.PI);
 };
+let gameStartTime;
+let playedSeconds = 0;
 let phase = "waiting";
 let lastTimestamp;
 let heroX;
@@ -41,16 +43,19 @@ const introductionElement = document.getElementById("introduction");
 const perfectElement = document.getElementById("perfect");
 const restartButton = document.getElementById("restart");
 const scoreElement = document.getElementById("score");
+const timeElement = document.getElementById("time");
 
 function resetGame() {
     phase = "waiting";
     lastTimestamp = undefined;
     sceneOffset = 0;
     score = 0;
+    gameStartTime = Date.now();
     introductionElement.style.opacity = 1;
     perfectElement.style.opacity = 0;
     restartButton.style.display = "none";
-    scoreElement.innerText = score;
+    scoreElement.innerText = `Score: ${score}`;
+    timeElement.innerText = `Time: 0s`;
     platforms = [{ x: 50, w: 50 }];
     generatePlatform();
     generatePlatform();
@@ -104,12 +109,16 @@ function generatePlatform() {
 }
 
 function saveScore() {
+    const gameEndTime = Date.now();
+    playedSeconds = Math.floor((gameEndTime - gameStartTime) / 1000);
+    timeElement.innerText = `Time: ${playedSeconds}s`;
+
     fetch('update_score.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: `score=${score}`
+        body: `score=${score}&played_seconds=${playedSeconds}`
     })
         .then(response => response.json())
         .then(data => {
@@ -173,6 +182,13 @@ function animate(timestamp) {
         lastTimestamp = timestamp;
         window.requestAnimationFrame(animate);
         return;
+    }
+    if (phase !== "waiting" && phase !== "falling") {
+        const currentTime = Math.floor((Date.now() - gameStartTime) / 1000);
+        if (currentTime !== playedSeconds) {
+            playedSeconds = currentTime;
+            timeElement.innerText = `Time: ${playedSeconds}s`;
+        }
     }
     switch (phase) {
         case "waiting":

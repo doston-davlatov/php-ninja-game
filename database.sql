@@ -24,8 +24,8 @@ CREATE TABLE game_records (
     id INT AUTO_INCREMENT PRIMARY KEY,
     game_id INT NOT NULL,
     user_id INT NOT NULL,
-    played_seconds INT NOT NULL,
     score INT DEFAULT 0,
+    played_seconds INT NOT NULL,
     FOREIGN KEY (game_id) REFERENCES games(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
