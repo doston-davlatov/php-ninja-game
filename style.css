@@ -1,0 +1,165 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+#score {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 1.5em;
+  font-weight: 900;
+}
+
+#introduction {
+  width: 80%;
+  max-width: 250px;
+  height: auto;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: 600;
+  font-size: 1em;
+  text-align: center;
+  transition: opacity 2s;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+}
+
+#restart {
+  width: 60%;
+  max-width: 200px;
+  height: 50px;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 10px;
+  color: white;
+  background-color: red;
+  border: none;
+  font-weight: 700;
+  font-size: 1.2em;
+  display: none;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#restart:hover,
+#restart:focus {
+  background-color: darkred;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+  transform: scale(1.05);
+}
+
+#perfect {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 2s;
+}
+
+#youtube,
+#youtube-card {
+  display: none;
+}
+
+/* Mobil va planshet uchun mos responsive dizayn */
+@media (max-width: 768px) {
+  #score {
+    font-size: 1.3em;
+    top: 15px;
+    right: 15px;
+  }
+
+  #restart {
+    font-size: 1em;
+    height: 45px;
+  }
+
+  #introduction {
+    font-size: 0.9em;
+    padding: 10px;
+  }
+}
+
+/* Youtube tugmasi faqat balandligi 425px dan katta bo‘lsa chiqadi */
+@media (min-height: 425px) {
+  #youtube {
+    z-index: 2;
+    display: block;
+    width: 80px;
+    height: 56px;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: red;
+    border-radius: 50% / 11%;
+    transform: scale(0.8);
+    transition: transform 0.5s;
+  }
+
+  #youtube:hover,
+  #youtube:focus {
+    transform: scale(0.9);
+  }
+
+  #youtube::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 7.5%;
+    left: -6%;
+    width: 112%;
+    height: 85%;
+    background: red;
+    border-radius: 9% / 50%;
+  }
+
+  #youtube::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 16px;
+    left: 30px;
+    width: 30px;
+    height: 20px;
+    border: 10px solid transparent;
+    border-left: 20px solid white;
+    box-sizing: border-box;
+  }
+
+  #youtube span {
+    font-size: 0;
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+
+  #youtube:hover + #youtube-card {
+    display: block;
+    position: absolute;
+    bottom: 12px;
+    left: 10px;
+    padding: 20px 20px 20px 100px;
+    width: 250px;
+    background-color: white;
+    font-size: 0.9em;
+  }
+}
