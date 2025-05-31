@@ -2,7 +2,7 @@
 define("DB_SERVER", "localhost");
 define("DB_USERNAME", "root");
 define("DB_PASSWORD", value: "");
-define("DB_NAME", "messager_db");
+define("DB_NAME", "ninja_db");
 
 class Database
 {

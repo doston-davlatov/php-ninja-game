@@ -1,19 +1,9 @@
-/* 
- * ======================================================
- *                    DATABASE YARATISH                  
- * ======================================================
- */
-
--- 1. Avvalgi mavjud database bo‘lsa, uni o‘chirish
 DROP DATABASE IF EXISTS ninja_db;
 
--- 2. Yangi database yaratish
 CREATE DATABASE ninja_db;
 
--- 3. Yaratilgan database'ni aktivlashtirish
 USE ninja_db;
 
--- Foydalanuvchilar jadvali: foydalanuvchi ma'lumotlari saqlanadi
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -23,7 +13,25 @@ CREATE TABLE users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- Demo maqsadida 4 ta foydalanuvchi qo‘shilmoqda
+CREATE TABLE games (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    duration_seconds INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE game_records (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    game_id INT NOT NULL,
+    user_id INT NOT NULL,
+    score INT DEFAULT 0,
+    started_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    ended_at DATETIME,
+    FOREIGN KEY (game_id) REFERENCES games(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
 INSERT INTO users (name, username, password)
 VALUES 
 ('Iqbolshoh Ilhomjonov', 'iqbolshoh', '$2y$10$gIKUrsLRB.U7ee9Fv9nib.di2NgMYvAeqqWGoB5aFXpHoxIv/igkW'),
