@@ -275,4 +275,32 @@ function deleteGame(id, button) {
     });
 }
 
+function logout() {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You will be logged out!",
+        icon: 'warning',
+        background: '#000000',
+        color: '#e0e0e0',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, log me out!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Logged out!',
+                text: 'You have been successfully logged out.',
+                icon: 'success',
+                background: '#000000',
+                color: '#e0e0e0',
+                showConfirmButton: false,
+                timer: 1500
+            }).then(() => {
+                window.location.href = './logout/';
+            });
+        }
+    });
+}
+
 fetchGames();
