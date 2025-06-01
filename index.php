@@ -573,9 +573,10 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        document.getElementById('createBtn').addEventListener('click', generateGameLink);
+        const createBtn = document.getElementById('createBtn');
+        createBtn.addEventListener('click', generateGameLink);
 
-        function generateGameLink(event) {
+        function generateGameLink() {
             const gameId = Math.random().toString(36).substring(2, 18);
             const timestamp = Date.now();
             const gameLink = `${window.location.origin}/game/link=${gameId}-${timestamp.toString().slice(-10)}`;
@@ -583,7 +584,7 @@
             fetch('create_game.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ link: gameLink, timestamp })
+                body: JSON.stringify({ link: gameLink })
             })
                 .then(response => response.json())
                 .then(data => {
@@ -595,112 +596,27 @@
                             background: '#000000',
                             color: '#e0e0e0',
                             confirmButtonColor: '#ff0000',
-                            confirmButtonText: 'Awesome!',
+                            confirmButtonText: 'OK',
                             timer: 2000,
                             timerProgressBar: true
                         });
+
                         fetchGames();
-                        createParticles(event);
+                        createParticles(createBtn); // ✔️ Muammo hal!
                     } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: 'Failed to create game link. Please try again.',
-                            background: '#000000',
-                            color: '#e0e0e0',
-                            confirmButtonColor: '#ff0000'
-                        });
+                        showError('Failed to create game link. Please try again.');
                     }
                 })
                 .catch(error => {
                     console.error('Fetch error:', error);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Network error occurred. Please try again.',
-                        background: '#000000',
-                        color: '#e0e0e0',
-                        confirmButtonColor: '#ff0000'
-                    });
+                    showError('Network error occurred. Please try again.');
                 });
         }
 
-        function fetchGames() {
-            fetch('get_games.php')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        renderGames(data.data);
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: 'Failed to fetch games. Please try again.',
-                            background: '#000000',
-                            color: '#e0e0e0',
-                            confirmButtonColor: '#ff0000'
-                        });
-                    }
-                })
-                .catch(error => {
-                    console.error('Fetch error:', error);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Network error occurred while fetching games.',
-                        background: '#000000',
-                        color: '#e0e0e0',
-                        confirmButtonColor: '#ff0000'
-                    });
-                });
-        }
+        function createParticles(targetElement) {
+            if (!targetElement) return; // ❗ Har ehtimolga qarshi tekshiruv
 
-        function copyGameLink(link, event) {
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(link).then(() => {
-                    showCopyFeedback(event);
-                }).catch(() => {
-                    fallbackCopy(link, event);
-                });
-            } else {
-                fallbackCopy(link, event);
-            }
-        }
-
-        function fallbackCopy(text, event) {
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            textarea.style.position = 'fixed';
-            textarea.style.opacity = '0';
-            document.body.appendChild(textarea);
-            textarea.focus();
-            textarea.select();
-            try {
-                document.execCommand('copy');
-                showCopyFeedback(event);
-            } catch (err) {
-                console.error('Fallback copy failed:', err);
-            }
-            document.body.removeChild(textarea);
-        }
-
-        function showCopyFeedback(event) {
-            const copyBtn = event.currentTarget;
-            const originalHtml = copyBtn.innerHTML;
-            copyBtn.innerHTML = '<i class="fas fa-check icon"></i>Copied!';
-            copyBtn.style.background = 'linear-gradient(45deg, #ff5252, #e53935)';
-
-            setTimeout(() => {
-                copyBtn.innerHTML = originalHtml;
-                copyBtn.style.background = '';
-            }, 2000);
-
-            createParticles(event);
-        }
-
-        function createParticles(event) {
-            const button = event.currentTarget;
-            const rect = button.getBoundingClientRect();
+            const rect = targetElement.getBoundingClientRect();
             const x = rect.left + rect.width / 2;
             const y = rect.top + rect.height / 2;
 
@@ -716,19 +632,59 @@
 
                 particle.style.left = `${xPos}px`;
                 particle.style.top = `${yPos}px`;
+                particle.style.position = 'fixed';
+                particle.style.width = '6px';
+                particle.style.height = '6px';
+                particle.style.background = 'red';
+                particle.style.borderRadius = '50%';
+                particle.style.pointerEvents = 'none';
+                particle.style.zIndex = 9999;
+                particle.style.transition = 'transform 0.5s ease-out, opacity 0.5s ease-out';
+
+                requestAnimationFrame(() => {
+                    particle.style.transform = `translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) scale(0)`;
+                    particle.style.opacity = '0';
+                });
 
                 setTimeout(() => particle.remove(), 600);
             }
+        }
+
+        function showError(message) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Xato!',
+                text: message,
+                background: '#000000',
+                color: '#e0e0e0',
+                confirmButtonColor: '#ff0000'
+            });
+        }
+
+        function fetchGames() {
+            fetch('get_games.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        renderGames(data.data);
+                    } else {
+                        showError('Failed to fetch games.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                    showError('Network error. Try again later.');
+                });
         }
 
         function renderGames(games) {
             const myGames = document.getElementById('my-games');
             myGames.innerHTML = '<h3>My Games</h3><br>';
 
-            games.forEach((item, index) => {
-                const game = item.game;
+            games.forEach((game, index) => {
                 const gameItem = document.createElement('div');
                 gameItem.classList.add('game-item');
+
                 const date = new Date(game.created_at);
                 const formattedTime = date.toLocaleString('en-US', {
                     month: 'short',
@@ -740,83 +696,103 @@
                 });
 
                 gameItem.innerHTML = `
-                    <div class="game-info">
-                        <a href="${game.link}" class="game-link" target="_blank">${game.link}</a>
-                        <div class="game-meta">
-                            <span class="game-time"><i class="fas fa-clock icon"></i> ${formattedTime}</span>
-                            <span class="game-players"><i class="fas fa-users icon"></i> ${game.player_number} Players</span>
-                        </div>
+                <div class="game-info">
+                    <a href="${game.link}" class="game-link" target="_blank">${game.link}</a>
+                    <div class="game-meta">
+                        <span class="game-time"><i class="fas fa-clock icon"></i> ${formattedTime}</span>
+                        <span class="game-players"><i class="fas fa-users icon"></i> ${game.player_number} players</span>
                     </div>
-                    <div class="game-actions">
-                        <button class="btn btn-secondary btn-small" onclick="copyGameLink('${game.link}', event)">
-                            <i class="fas fa-copy icon"></i>Copy
-                        </button>
-                        <button class="btn btn-small" onclick="viewGame('${game.link}')">
-                            <i class="fas fa-eye icon"></i>View
-                        </button>
-                        <button class="btn btn-danger btn-small" onclick="deleteGame(${game.id}, this)">
-                            <i class="fas fa-trash icon"></i>Delete
-                        </button>
-                    </div>
-                `;
-                myGames.appendChild(gameItem);
+                </div>
+                <div class="game-actions">
+                    <button class="btn btn-secondary btn-small" onclick="copyGameLink('${game.link}', this)">
+                        <i class="fas fa-copy icon"></i> Copy
+                    </button>
+                    <button class="btn btn-small" onclick="viewGame('${game.link}', this)">
+                        <i class="fas fa-eye icon"></i> View
+                    </button>
+                    <button class="btn btn-danger btn-small" onclick="deleteGame(${game.id}, this)">
+                        <i class="fas fa-trash icon"></i> Delete
+                    </button>
+                </div>
+            `;
 
+                myGames.appendChild(gameItem);
                 setTimeout(() => gameItem.classList.add('show'), index * 200);
             });
         }
 
-        function viewGame(link) {
-            window.open(link, '_blank');
-            createParticles({ currentTarget: document.querySelector('.game-actions .btn') });
+        function copyGameLink(link, btn) {
+            if (!navigator.clipboard) {
+                const textarea = document.createElement('textarea');
+                textarea.value = link;
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    document.execCommand('copy');
+                    btn.innerHTML = '<i class="fas fa-check icon"></i> Copied!';
+                    btn.style.background = 'green';
+                } catch (err) {
+                    showError('Copy failed.');
+                }
+                document.body.removeChild(textarea);
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="fas fa-copy icon"></i> Copy';
+                    btn.style.background = '';
+                }, 2000);
+                createParticles(btn);
+                return;
+            }
+
+            navigator.clipboard.writeText(link).then(() => {
+                btn.innerHTML = '<i class="fas fa-check icon"></i> Copied!';
+                btn.style.background = 'green';
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="fas fa-copy icon"></i> Copy';
+                    btn.style.background = '';
+                }, 2000);
+                createParticles(btn);
+            }).catch(err => {
+                console.error('Clipboard error:', err);
+                showError('Copy failed.');
+            });
         }
 
-        function deleteGame(gameId, button) {
+        function viewGame(link, button) {
+            window.open(link, '_blank');
+            createParticles(button);
+        }
+
+        function deleteGame(id, button) {
             fetch('delete_game.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: gameId })
+                body: JSON.stringify({ id })
             })
-                .then(response => response.json())
+                .then(res => res.json())
                 .then(data => {
                     if (data.success) {
                         Swal.fire({
                             icon: 'success',
-                            title: 'Game Deleted!',
-                            text: 'The game link has been successfully deleted.',
+                            title: 'Deleted!',
+                            text: 'Game link removed.',
                             background: '#000000',
                             color: '#e0e0e0',
-                            confirmButtonColor: '#ff0000',
-                            confirmButtonText: 'OK',
                             timer: 2000,
-                            timerProgressBar: true
+                            showConfirmButton: false
                         });
                         fetchGames();
-                        createParticles({ currentTarget: button });
+                        createParticles(button);
                     } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: 'Failed to delete game. Please try again.',
-                            background: '#000000',
-                            color: '#e0e0e0',
-                            confirmButtonColor: '#ff0000'
-                        });
+                        showError('Failed to delete game.');
                     }
                 })
-                .catch(error => {
-                    console.error('Fetch error:', error);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Network error occurred while deleting game.',
-                        background: '#000000',
-                        color: '#e0e0e0',
-                        confirmButtonColor: '#ff0000'
-                    });
+                .catch(err => {
+                    console.error(err);
+                    showError('Network error while deleting.');
                 });
         }
 
-        // Initial fetch
+        // Load games at startup
         fetchGames();
     </script>
 </body>
