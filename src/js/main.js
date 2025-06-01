@@ -1,4 +1,3 @@
-// Custom Array and Math extensions
 Array.prototype.last = function () {
     return this[this.length - 1];
 };
@@ -7,7 +6,6 @@ Math.sinus = function (degree) {
     return Math.sin((degree / 180) * Math.PI);
 };
 
-// Game state variables
 let gameStartTime;
 let playedSeconds = 0;
 let phase = "waiting";
@@ -20,7 +18,6 @@ let sticks = [];
 let trees = [];
 let score = 0;
 
-// Game constants
 const canvasWidth = 375;
 const canvasHeight = 375;
 const platformHeight = 100;
@@ -42,7 +39,6 @@ const fallingSpeed = 2;
 const heroWidth = 17;
 const heroHeight = 30;
 
-// DOM elements
 const canvas = document.getElementById("game");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -59,7 +55,7 @@ function resetGame() {
     sceneOffset = 0;
     score = 0;
     playedSeconds = 0;
-    gameStartTime = undefined; // Timer will start on first click
+    gameStartTime = undefined;
     introductionElement.style.opacity = 1;
     perfectElement.style.opacity = 0;
     restartButton.style.display = "none";
@@ -116,8 +112,6 @@ function saveScore() {
     playedSeconds = Math.floor((gameEndTime - gameStartTime) / 1000);
     timeElement.innerText = `Time: ${playedSeconds}s`;
 
-    console.log(`score=${score}&played_seconds=${playedSeconds}&game_id=${game_id}`)
-
     fetch('./score_update.php', {
         method: 'POST',
         headers: {
@@ -126,11 +120,9 @@ function saveScore() {
         body: `score=${score}&played_seconds=${playedSeconds}&game_id=${game_id}`
     })
         .then(res => res.json())
-        .then(data => console.log(data))
         .catch(err => console.error(err));
 }
 
-// Event listeners
 window.addEventListener("keydown", function (event) {
     if (event.key === " ") {
         event.preventDefault();
@@ -141,9 +133,7 @@ window.addEventListener("keydown", function (event) {
 window.addEventListener("mousedown", function (event) {
     if (phase === "waiting") {
         if (!gameStartTime) {
-            gameStartTime = Date.now(); // Start timer on first click
-            playedSeconds = 0;
-            timeElement.innerText = `Time: 0s`;
+            gameStartTime = Date.now();
         }
         lastTimestamp = undefined;
         introductionElement.style.opacity = 0;
@@ -167,9 +157,7 @@ window.addEventListener("resize", function () {
 window.addEventListener("touchstart", function (event) {
     if (phase === "waiting") {
         if (!gameStartTime) {
-            gameStartTime = Date.now(); // Start timer on first touch
-            playedSeconds = 0;
-            timeElement.innerText = `Time: 0s`;
+            gameStartTime = Date.now();
         }
         lastTimestamp = undefined;
         introductionElement.style.opacity = 0;
@@ -190,7 +178,6 @@ restartButton.addEventListener("click", function (event) {
     restartButton.style.display = "none";
 });
 
-// Animation loop
 function animate(timestamp) {
     if (!lastTimestamp) {
         lastTimestamp = timestamp;
@@ -198,13 +185,9 @@ function animate(timestamp) {
         return;
     }
 
-    // Update timer only if game has started
     if (gameStartTime && phase !== "waiting") {
-        const currentTime = Math.floor((Date.now() - gameStartTime) / 1000);
-        if (currentTime !== playedSeconds) {
-            playedSeconds = currentTime;
-            timeElement.innerText = `Time: ${playedSeconds}s`;
-        }
+        playedSeconds = Math.floor((Date.now() - gameStartTime) / 1000);
+        timeElement.innerText = `Time: ${playedSeconds}s`;
     }
 
     switch (phase) {
@@ -300,7 +283,6 @@ function thePlatformTheStickHits() {
     return [platformTheStickHits, false];
 }
 
-// Drawing functions
 function draw() {
     ctx.save();
     ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
@@ -457,6 +439,5 @@ function getTreeY(x, baseHeight, amplitude) {
     return Math.sinus(x) * amplitude + sineBaseY;
 }
 
-// Initialize game
 resetGame();
 window.requestAnimationFrame(animate);

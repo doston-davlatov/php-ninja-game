@@ -44,7 +44,7 @@ if (!$existing) {
     }
 } else {
     $old = $existing[0];
-    if ($score > $old['score'] || $played_seconds < $old['played_seconds']) {
+    if ($score > $old['score'] || $score >= $old['score'] && $played_seconds < $old['played_seconds']) {
         $updated = $db->update('game_records', [
             'score' => $score,
             'played_seconds' => $played_seconds
