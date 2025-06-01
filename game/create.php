@@ -3,7 +3,7 @@ session_start();
 header('Content-Type: application/json');
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header('Location: ./login/');
+    header('Location: ../login/');
     exit;
 }
 

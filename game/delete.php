@@ -3,17 +3,12 @@ session_start();
 header('Content-Type: application/json');
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    echo json_encode([
-        'success' => false,
-        'message' => 'You must be logged in to delete a game.'
-    ]);
+    header('Location: ../login/');
     exit;
 }
 
 include "../config.php";
 $db = new Database();
-
-$user_id = $_SESSION['user']['id'];
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode([
@@ -23,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+$user_id = $_SESSION['user']['id'];
 $id = $_POST['id'] ?? null;
 
 if (!$id) {
