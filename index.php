@@ -807,28 +807,30 @@
             Swal.fire({
                 icon: 'warning',
                 title: 'Are you sure?',
-                text: 'Do you really want to do this action?',
+                text: 'Do you really want to delete this game?',
                 background: '#000000',
                 color: '#e0e0e0',
                 showCancelButton: true,
-                confirmButtonText: 'Yes, do it!',
+                confirmButtonText: 'Yes, delete it!',
                 cancelButtonText: 'Cancel',
-                confirmButtonColor: '#ff0000',
+                confirmButtonColor: '#ff3333',
                 cancelButtonColor: '#555555',
             }).then((result) => {
                 if (result.isConfirmed) {
+                    const formData = new FormData();
+                    formData.append('id', id);
+
                     fetch('game/delete.php', {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ id })
+                        body: formData
                     })
-                        .then(res => res.json())
+                        .then(response => response.json())
                         .then(data => {
                             if (data.success) {
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Deleted!',
-                                    text: 'The game link has been successfully deleted.',
+                                    text: data.message,
                                     background: '#000000',
                                     color: '#e0e0e0',
                                     timer: 2000,
@@ -837,12 +839,12 @@
                                 fetchGames();
                                 createParticles(button);
                             } else {
-                                showError('An error occurred while deleting.');
+                                showError(data.message || 'Something went wrong.');
                             }
                         })
-                        .catch(err => {
-                            console.error(err);
-                            showError('Network error. Please try again.');
+                        .catch(error => {
+                            console.error('Error:', error);
+                            showError('Network error! Please try again.');
                         });
                 }
             });
