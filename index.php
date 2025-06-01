@@ -65,7 +65,7 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) rotate(0deg);
+            transform: translate(-50%,nsl-50%) rotate(0deg);
             color: rgba(255, 0, 0, 0.1);
             font-size: 120px;
             opacity: 0;
@@ -184,40 +184,59 @@
                 inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
-        .btn-secondary {
-            background: linear-gradient(45deg, #212121, #424242);
+        .btn-copy {
+            background: linear-gradient(45deg, #0288d1, #01579b);
         }
 
-        .btn-secondary:hover {
-            background: linear-gradient(45deg, #1b1b1b, #333333);
+        .btn-copy:hover {
+            background: linear-gradient(45deg, #039be5, #0277bd);
             box-shadow:
-                0 6px 18px rgba(66, 66, 66, 0.7),
+                0 6px 18px rgba(2, 136, 209, 0.7),
                 inset 0 1px 0 rgba(255, 255, 255, 0.4);
         }
 
-        .btn-danger {
-            background: linear-gradient(45deg, #b71c1c, #d32f2f);
+        .btn-view {
+            background: linear-gradient(45deg, #388e3c, #1b5e20);
         }
 
-        .btn-danger:hover {
-            background: linear-gradient(45deg, #9c0000, #b71c1c);
+        .btn-view:hover {
+            background: linear-gradient(45deg, #43a047, #2e7d32);
             box-shadow:
-                0 6px 18px rgba(183, 28, 28, 0.7),
+                0 6px 18px rgba(56, 142, 60, 0.7),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+
+        .btn-delete {
+            background: linear-gradient(45deg, #d81b60, #880e4f);
+        }
+
+        .btn-delete:hover {
+            background: linear-gradient(45deg, #e91e63, #ad1457);
+            box-shadow:
+                0 6px 18px rgba(216, 27, 96, 0.7),
                 inset 0 1px 0 rgba(255, 255, 255, 0.4);
         }
 
         #my-games {
             margin-top: 25px;
             padding: 20px;
-            background: linear-gradient(45deg, rgba(0, 0, 0, 0.95), rgba(33, 33, 33, 0.95));
-            border-radius: 10px;
+            background: linear-gradient(45deg, rgba(20, 20, 20, 0.95), rgba(40, 40, 40, 0.95));
+            border-radius: 12px;
             box-shadow:
-                0 0 25px rgba(255, 0, 0, 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+                0 0 20px rgba(255, 0, 0, 0.4),
+                inset 0 2px 0 rgba(255, 255, 255, 0.1);
             width: 100%;
             max-height: 350px;
             overflow-y: auto;
             animation: fadeInGames 1s ease-out;
+            border: 1px solid rgba(255, 0, 0, 0.3);
+        }
+
+        #my-games h3 {
+            color: #ff0000;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            text-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
         }
 
         @keyframes fadeInGames {
@@ -236,14 +255,15 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 12px;
-            margin-bottom: 8px;
-            background: rgba(0, 0, 0, 0.9);
-            border-radius: 6px;
-            box-shadow: 0 0 12px rgba(255, 0, 0, 0.3);
+            padding: 15px;
+            margin-bottom: 10px;
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
             opacity: 0;
             transform: translateX(-15px);
             transition: all 0.4s ease;
+            border-left: 4px solid #ff0000;
         }
 
         .game-item.show {
@@ -257,7 +277,7 @@
         }
 
         .game-link {
-            color: #ff0000;
+            color: #ff5252;
             font-weight: 600;
             font-size: 0.95em;
             word-break: break-all;
@@ -267,22 +287,24 @@
         }
 
         .game-link:hover {
-            color: #ef5350;
+            color: #ff8a80;
+            text-decoration: underline;
         }
 
         .game-time {
-            color: #757575;
+            color: #b0b0b0;
             font-size: 0.85em;
         }
 
         .game-actions {
             display: flex;
-            gap: 8px;
+            gap: 10px;
         }
 
         .btn-small {
-            padding: 6px 12px;
-            font-size: 0.85em;
+            padding: 8px 15px;
+            font-size: 0.9em;
+            border-radius: 5px;
         }
 
         .particle {
@@ -313,20 +335,21 @@
         }
 
         #my-games::-webkit-scrollbar {
-            width: 6px;
+            width: 8px;
         }
 
         #my-games::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
         }
 
         #my-games::-webkit-scrollbar-thumb {
-            background: #ff0000;
-            border-radius: 3px;
+            background: linear-gradient(45deg, #ff0000, #d32f2f);
+            border-radius: 4px;
         }
 
         #my-games::-webkit-scrollbar-thumb:hover {
-            background: #d32f2f;
+            background: linear-gradient(45deg, #d32f2f, #b71c1c);
         }
 
         @media (max-width: 768px) {
@@ -397,7 +420,7 @@
         <button id="createBtn" class="btn"><i class="fas fa-play icon"></i>Create Game Link</button>
 
         <div id="my-games">
-            <h3>Previous Games</h3>
+            <h3>My Games</h3>
             <!-- Dynamically populated -->
         </div>
     </div>
@@ -519,7 +542,7 @@
             const copyBtn = event.currentTarget;
             const originalHtml = copyBtn.innerHTML;
             copyBtn.innerHTML = '<i class="fas fa-check icon"></i>Copied!';
-            copyBtn.style.background = 'linear-gradient(45deg, #ff0000, #ef5350)';
+            copyBtn.style.background = 'linear-gradient(45deg, #039be5, #0277bd)';
 
             setTimeout(() => {
                 copyBtn.innerHTML = originalHtml;
@@ -576,13 +599,13 @@
                         <div class="game-time">Created: ${formattedTime}</div>
                     </div>
                     <div class="game-actions">
-                        <button class="btn btn-secondary btn-small" onclick="copyGameLink('${game.link}', event)">
+                        <button class="btn btn-copy btn-small" onclick="copyGameLink('${game.link}', event)">
                             <i class="fas fa-copy icon"></i>Copy
                         </button>
-                        <button class="btn btn-small" onclick="viewGame('${game.link}')">
+                        <button class="btn btn-view btn-small" onclick="viewGame('${game.link}')">
                             <i class="fas fa-eye icon"></i>View
                         </button>
-                        <button class="btn btn-danger btn-small" onclick="deleteGame(${game.id}, this)">
+                        <button class="btn btn-delete btn-small" onclick="deleteGame(${game.id}, this)">
                             <i class="fas fa-trash icon"></i>Delete
                         </button>
                     </div>
@@ -595,7 +618,7 @@
 
         function viewGame(link) {
             window.open(link, '_blank');
-            createParticles({ currentTarget: document.querySelector('.game-actions .btn') });
+            createParticles({ currentTarget: thequerySelector('.game-actions .btn') });
         }
 
         function deleteGame(gameId, button) {
