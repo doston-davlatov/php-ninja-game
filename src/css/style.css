@@ -15,6 +15,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100%;
+  position: relative;
 }
 
 .result {
@@ -75,13 +76,6 @@ body {
   to {
     transform: scale(1.05);
     box-shadow: 0 0 10px 5px rgba(255, 215, 0, 0);
-  }
-}
-
-@media (max-width: 768px) {
-  .result {
-    top: 10px;
-    right: 10px;
   }
 }
 
@@ -147,14 +141,6 @@ body {
   }
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  #create-new-game {
-    font-size: 1em;
-    padding: 8px 12px;
-  }
-}
-
 #introduction {
   width: 80%;
   max-width: 250px;
@@ -208,8 +194,128 @@ body {
   display: none;
 }
 
-/* Mobil va planshet uchun mos responsive dizayn */
+/* Score Modal Styles */
+.score-modal-toggle {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-family: 'Arial', sans-serif;
+  font-size: 1.2em;
+  font-weight: 900;
+  color: #fff;
+  text-shadow:
+    2px 2px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  padding: 10px 15px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  z-index: 100;
+}
+
+.score-modal-toggle::before {
+  content: "🏆 ";
+}
+
+.score-modal-toggle:hover {
+  background: rgba(30, 30, 30, 0.8);
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 8px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.score-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 200;
+  justify-content: center;
+  align-items: center;
+}
+
+.score-modal-content {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  padding: 20px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80%;
+  overflow-y: auto;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.score-modal-content h2 {
+  font-family: 'Arial', sans-serif;
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+.score-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Arial', sans-serif;
+}
+
+.score-table th,
+.score-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.score-table th {
+  background: #6A0DAD;
+  color: #fff;
+  font-weight: 700;
+}
+
+.score-table tr:nth-child(even) {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.score-table tr:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5em;
+  color: #333;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
+  .result {
+    top: 10px;
+    right: 10px;
+  }
+
+  #create-new-game {
+    font-size: 1em;
+    padding: 8px 12px;
+  }
+
   #restart {
     font-size: 1em;
     height: 45px;
@@ -219,9 +325,24 @@ body {
     font-size: 0.9em;
     padding: 10px;
   }
+
+  .score-modal-toggle {
+    font-size: 1em;
+    padding: 8px 12px;
+  }
+
+  .score-modal-content {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .score-table th,
+  .score-table td {
+    padding: 8px;
+    font-size: 0.9em;
+  }
 }
 
-/* Youtube tugmasi faqat balandligi 425px dan katta bo‘lsa chiqadi */
 @media (min-height: 425px) {
   #youtube {
     z-index: 2;

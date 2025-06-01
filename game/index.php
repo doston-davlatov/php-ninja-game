@@ -17,9 +17,6 @@ if (!isset($game[0]['id'])) {
 }
 $game_id = $game[0]['id'];
 ?>
-<script>
-    const game_id = <?= json_encode($game_id); ?>;
-</script>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -30,10 +27,31 @@ $game_id = $game[0]['id'];
     <link rel="stylesheet" href="../src/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <title>Black Ninja</title>
+    <script>const game_id = <?= json_encode($game_id); ?>;</script>
 </head>
 
 <body>
+
+
     <div class="container">
+        <button class="score-modal-toggle" id="score-modal-toggle">All Scores</button>
+        <div class="score-modal" id="score-modal">
+            <div class="score-modal-content">
+                <button class="close-modal" id="close-modal">&times;</button>
+                <h2>Leaderboard</h2>
+                <table class="score-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Username</th>
+                            <th>Score</th>
+                            <th>Time (s)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="score-table-body"></tbody>
+                </table>
+            </div>
+        </div>
         <div class="result">
             <div id="score"></div>
             <div id="time"></div>

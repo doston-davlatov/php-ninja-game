@@ -1,3 +1,4 @@
+
 Array.prototype.last = function () {
     return this[this.length - 1];
 };
@@ -48,6 +49,12 @@ const perfectElement = document.getElementById("perfect");
 const restartButton = document.getElementById("restart");
 const scoreElement = document.getElementById("score");
 const timeElement = document.getElementById("time");
+
+// Modal elements
+const scoreModalToggle = document.getElementById("score-modal-toggle");
+const scoreModal = document.getElementById("score-modal");
+const closeModal = document.getElementById("close-modal");
+const scoreTableBody = document.getElementById("score-table-body");
 
 function resetGame() {
     phase = "waiting";
@@ -122,6 +129,48 @@ function saveScore() {
         .then(res => res.json())
         .catch(err => console.error(err));
 }
+
+// Fetch and display scores in the modal
+function fetchScores() {
+    fetch('./get_scores.php?game_id=' + game_id)
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(scores) {
+            scoreTableBody.innerHTML = '';
+            scores.forEach(function(score) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${score.name || 'Unknown'}</td>
+                    <td>${score.username || 'Unknown'}</td>
+                    <td>${score.score}</td>
+                    <td>${score.played_seconds}</td>
+                `;
+                scoreTableBody.appendChild(row);
+            });
+        })
+        .catch(function(err) {
+            console.error('Error fetching scores:', err);
+            scoreTableBody.innerHTML = '<tr><td colspan="4">Error loading scores</td></tr>';
+        });
+}
+
+// Modal toggle functionality
+scoreModalToggle.addEventListener('click', () => {
+    scoreModal.style.display = 'flex';
+    fetchScores();
+});
+
+closeModal.addEventListener('click', () => {
+    scoreModal.style.display = 'none';
+});
+
+// Close modal when clicking outside
+scoreModal.addEventListener('click', (e) => {
+    if (e.target === scoreModal) {
+        scoreModal.style.display = 'none';
+    }
+});
 
 window.addEventListener("keydown", function (event) {
     if (event.key === " ") {
