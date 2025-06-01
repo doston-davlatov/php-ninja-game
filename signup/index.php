@@ -82,7 +82,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Foydalanuvchi borligini tekshirish
     $existingUser = $db->select('users', '*', 'username = ?', [$username], 's');
     if (!empty($existingUser)) {
         $response['title'] = 'Foydalanuvchi nomi band';
@@ -127,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ro'yxatdan o'tish</title>
+    <title>Ro‘yxatdan o‘tish</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -148,29 +147,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="col-md-6 col-lg-4">
                 <div class="card shadow">
                     <div class="card-body p-4">
-                        <h2 class="text-center mb-4">Hisob yaratish</h2>
+                        <h2 class="text-center mb-4">Ro‘yxatdan o‘tish</h2>
                         <form id="signupForm" method="POST">
                             <input type="hidden" name="csrf_token"
                                 value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
                             <div class="mb-3">
                                 <label for="name" class="form-label">To‘liq ism</label>
                                 <input type="text" class="form-control" id="name" name="name"
-                                    placeholder="To‘liq ismingizni kiriting (maks 100 ta belgi)" maxlength="100"
-                                    required>
+                                    placeholder="To‘liq ismingizni kiriting" maxlength="100">
                             </div>
                             <div class="mb-3">
                                 <label for="username" class="form-label">Foydalanuvchi nomi</label>
                                 <input type="text" class="form-control" id="username" name="username"
-                                    placeholder="Foydalanuvchi nomi tanlang (3-30 ta belgi, a-z, 0-9, _)"
-                                    pattern="[a-z0-9_]{3,30}"
-                                    title="Foydalanuvchi nomi 3-30 ta kichik harf, raqam yoki pastki chiziqdan iborat bo‘lishi kerak"
-                                    required>
+                                    placeholder="Foydalanuvchi nomi tanlang">
                             </div>
                             <div class="mb-3 position-relative">
                                 <label for="password" class="form-label">Parol</label>
                                 <div class="input-group">
                                     <input type="password" id="password" class="form-control" name="password"
-                                        placeholder="Parol yarating (kamida 8 ta belgi)" minlength="8" required>
+                                        placeholder="Parol yarating">
                                     <button class="btn btn-outline-secondary password-toggle" type="button"
                                         onclick="togglePassword('password')">
                                         <i class="fas fa-eye"></i>
@@ -181,8 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <label for="confirm_password" class="form-label">Parolni tasdiqlang</label>
                                 <div class="input-group">
                                     <input type="password" id="confirm_password" class="form-control"
-                                        name="confirm_password" placeholder="Parolni qaytadan kiriting" minlength="8"
-                                        required>
+                                        name="confirm_password" placeholder="Parolni qaytadan kiriting">
                                     <button class="btn btn-outline-secondary password-toggle" type="button"
                                         onclick="togglePassword('confirm_password')">
                                         <i class="fas fa-eye"></i>

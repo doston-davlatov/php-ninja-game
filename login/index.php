@@ -133,16 +133,13 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                             <div class="mb-3">
                                 <label for="username" class="form-label">Foydalanuvchi Nomi</label>
                                 <input type="text" class="form-control" name="username" id="username"
-                                    placeholder="Foydalanuvchi nomini kiriting (3-30 belgi, a-z, 0-9, _)"
-                                    pattern="[a-z0-9_]{3,30}"
-                                    title="Foydalanuvchi nomi 3-30 belgidan iborat bo‘lishi va faqat kichik harflar, raqamlar yoki pastki chiziq belgilarini o‘z ichiga olishi kerak"
-                                    required>
+                                    placeholder="Foydalanuvchi nomini kiriting">
                             </div>
                             <div class="mb-3 position-relative">
                                 <label for="password" class="form-label">Parol</label>
                                 <div class="input-group">
                                     <input type="password" id="password" class="form-control" name="password"
-                                        placeholder="Parolni kiriting (kamida 8 belgi)" minlength="8" required>
+                                        placeholder="Parolni kiriting">
                                     <button class="btn btn-outline-secondary password-toggle" type="button"
                                         onclick="togglePassword('password')">
                                         <i class="fas fa-eye"></i>

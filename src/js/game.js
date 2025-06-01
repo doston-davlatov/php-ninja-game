@@ -157,7 +157,7 @@ function fetchScores() {
 
                 const row = document.createElement('tr');
                 if (score.username === myUsername) {
-                    row.style.backgroundColor = 'rgba(255, 0, 0, 0.3)';
+                    row.style.backgroundColor = 'rgba(0, 255, 0, 0.3)';
                     row.style.fontWeight = 'bold';
                 }
 
@@ -517,7 +517,8 @@ function getTreeY(x, baseHeight, amplitude) {
 
 function goHome() {
     if (confirm("Bosh sahifaga o‘tishni xohlaysizmi?")) {
-        location.href = "../";
+        const path = location.pathname.replace(/\/[^\/]*$/, '/');
+        location.href = path;
     }
 }
 
