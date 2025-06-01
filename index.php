@@ -594,22 +594,31 @@
         });
 
         function generateGameLink() {
+            const createBtn = document.getElementById('createBtn');
             const gameId = Math.random().toString(36).substring(2, 18);
             const timestamp = Date.now();
             const gameLink = `${window.location.origin}/game/link=${gameId}-${timestamp.toString().slice(-10)}`;
 
+            const formData = new URLSearchParams();
+            formData.append('link', gameLink);
+
             fetch('game/create.php', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ link: gameLink })
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: formData
             })
-                .then(response => response.json())
+                .then(res => {
+                    if (!res.ok) throw new Error('HTTP error ' + res.status);
+                    return res.json();
+                })
                 .then(data => {
                     if (data.success) {
                         Swal.fire({
                             icon: 'success',
-                            title: 'Game Created!',
-                            text: 'Your game link has been successfully created.',
+                            title: 'Success!',
+                            text: data.message,
                             background: '#000000',
                             color: '#e0e0e0',
                             confirmButtonColor: '#00cc66',
@@ -617,16 +626,31 @@
                             timer: 2000,
                             timerProgressBar: true
                         });
-
                         fetchGames();
                         createParticles(createBtn);
                     } else {
-                        showError('Failed to create game link. Please try again.');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed!',
+                            text: data.message,
+                            background: '#000000',
+                            color: '#e0e0e0',
+                            confirmButtonColor: '#ff3333',
+                            confirmButtonText: 'OK'
+                        });
                     }
                 })
-                .catch(error => {
-                    console.error('Fetch error:', error);
-                    showError('Network error occurred. Please try again.');
+                .catch(err => {
+                    console.error('Fetch error:', err);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Network Error!',
+                        text: 'Something went wrong. Please check your connection and try again.',
+                        background: '#000000',
+                        color: '#e0e0e0',
+                        confirmButtonColor: '#ff3333',
+                        confirmButtonText: 'OK'
+                    });
                 });
         }
 
