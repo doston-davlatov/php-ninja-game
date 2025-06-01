@@ -22,19 +22,22 @@ $game_id = $game[0]['id'];
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../src/css/game.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../src/css/game.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <title>Black Ninja</title>
-    <script>const game_id = <?= json_encode($game_id); ?>;</script>
+    <script>
+        const game_id = <?= json_encode($game_id); ?>;
+        const myUsername = <?= json_encode($_SESSION['user']['username']); ?>;
+    </script>
 </head>
 
 <body>
     <div class="container">
         <button class="leaderboard-button" id="leaderboard-button">All Scores</button>
         <a class="home-a" id="home-a" href="../">Home</a>
+
         <div class="score-modal" id="score-modal">
             <div class="score-modal-content">
                 <button class="close-modal" id="close-modal">×</button>
@@ -53,13 +56,16 @@ $game_id = $game[0]['id'];
                 </table>
             </div>
         </div>
+
         <div class="result">
             <div id="score"></div>
             <div id="time"></div>
         </div>
+
         <canvas id="game" width="375" height="375"></canvas>
-        <div id="introduction">Tayoqni cho'zish uchun sichqonchani bosib turing</div>
-        <div id="perfect">Ajoyib</div>
+
+        <div id="introduction">Hold the mouse button to stretch the stick</div>
+        <div id="perfect">Awesome!</div>
         <button id="restart">RESTART</button>
     </div>
 

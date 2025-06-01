@@ -157,6 +157,11 @@ function fetchScores() {
                 }
 
                 const row = document.createElement('tr');
+                if (score.username === myUsername) {
+                    row.style.backgroundColor = 'rgba(255, 0, 0, 0.3)';
+                    row.style.fontWeight = 'bold';
+                }
+
                 row.innerHTML = `
                     <td>${currentRank}</td>
                     <td>${score.name}</td>
