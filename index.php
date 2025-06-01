@@ -574,7 +574,24 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         const createBtn = document.getElementById('createBtn');
-        createBtn.addEventListener('click', generateGameLink);
+        createBtn.addEventListener('click', () => {
+            Swal.fire({
+                icon: 'question',
+                title: 'Create New Game?',
+                text: 'Do you really want to generate a new game link?',
+                background: '#000000',
+                color: '#e0e0e0',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, create it!',
+                cancelButtonText: 'Cancel',
+                confirmButtonColor: '#00cc66',
+                cancelButtonColor: '#555555',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    generateGameLink();
+                }
+            });
+        });
 
         function generateGameLink() {
             const gameId = Math.random().toString(36).substring(2, 18);
@@ -595,14 +612,14 @@
                             text: 'Your game link has been successfully created.',
                             background: '#000000',
                             color: '#e0e0e0',
-                            confirmButtonColor: '#ff0000',
+                            confirmButtonColor: '#00cc66',
                             confirmButtonText: 'OK',
                             timer: 2000,
                             timerProgressBar: true
                         });
 
                         fetchGames();
-                        createParticles(createBtn); // ✔️ Muammo hal!
+                        createParticles(createBtn);
                     } else {
                         showError('Failed to create game link. Please try again.');
                     }
@@ -614,7 +631,7 @@
         }
 
         function createParticles(targetElement) {
-            if (!targetElement) return; // ❗ Har ehtimolga qarshi tekshiruv
+            if (!targetElement) return;
 
             const rect = targetElement.getBoundingClientRect();
             const x = rect.left + rect.width / 2;
@@ -708,7 +725,7 @@
                         <i class="fas fa-copy icon"></i> Copy
                     </button>
                     <button class="btn btn-small" onclick="viewGame('${game.link}', this)">
-                        <i class="fas fa-eye icon"></i> View
+                        <i class="fas fa-eye icon"></i> Open Game
                     </button>
                     <button class="btn btn-danger btn-small" onclick="deleteGame(${game.id}, this)">
                         <i class="fas fa-trash icon"></i> Delete
@@ -763,33 +780,48 @@
         }
 
         function deleteGame(id, button) {
-            fetch('game/delete.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id })
-            })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Deleted!',
-                            text: 'Game link removed.',
-                            background: '#000000',
-                            color: '#e0e0e0',
-                            timer: 2000,
-                            showConfirmButton: false
+            Swal.fire({
+                icon: 'warning',
+                title: 'Are you sure?',
+                text: 'Do you really want to do this action?',
+                background: '#000000',
+                color: '#e0e0e0',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, do it!',
+                cancelButtonText: 'Cancel',
+                confirmButtonColor: '#ff0000',
+                cancelButtonColor: '#555555',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch('game/delete.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id })
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Deleted!',
+                                    text: 'The game link has been successfully deleted.',
+                                    background: '#000000',
+                                    color: '#e0e0e0',
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                });
+                                fetchGames();
+                                createParticles(button);
+                            } else {
+                                showError('An error occurred while deleting.');
+                            }
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            showError('Network error. Please try again.');
                         });
-                        fetchGames();
-                        createParticles(button);
-                    } else {
-                        showError('Failed to delete game.');
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
-                    showError('Network error while deleting.');
-                });
+                }
+            });
         }
 
         // Load games at startup
