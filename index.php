@@ -597,7 +597,7 @@
             const createBtn = document.getElementById('createBtn');
             const gameId = Math.random().toString(36).substring(2, 18);
             const timestamp = Date.now();
-            const gameLink = `${window.location.origin}/game/link=${gameId}-${timestamp.toString().slice(-10)}`;
+            const gameLink = `${window.location.origin}/game/?link=${gameId}-${timestamp.toString().slice(-10)}`;
 
             const formData = new URLSearchParams();
             formData.append('link', gameLink);
@@ -741,7 +741,7 @@
                     <a href="${game.link}" class="game-link" target="_blank">${game.link}</a>
                     <div class="game-meta">
                         <span class="game-time"><i class="fas fa-clock icon"></i> ${formattedTime}</span>
-                        <span class="game-players"><i class="fas fa-users icon"></i> ${game.player_number} players</span>
+                        <span class="game-players"><i class="fas fa-users icon"></i> ${game.players_count} players</span>
                     </div>
                 </div>
                 <div class="game-actions">

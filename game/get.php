@@ -12,13 +12,20 @@ $db = new Database();
 
 $user_id = $_SESSION['user']['id'];
 
-$games = $db->select(
-    'games',
-    '*',
-    'user_id = ? ORDER BY created_at DESC',
-    [$user_id],
-    'i'
-);
+$sql = "
+    SELECT 
+        g.id,
+        g.link,
+        g.created_at,
+        COUNT(DISTINCT gr.user_id) AS players_count
+    FROM games g 
+    LEFT JOIN game_records gr ON g.id = gr.game_id
+    WHERE g.user_id = ?
+    GROUP BY g.id, g.link, g.created_at
+    ORDER BY g.created_at DESC
+";
+
+$games = $db->executeQuery($sql, [$user_id], 'i')->get_result()->fetch_all(MYSQLI_ASSOC);
 
 echo json_encode([
     'success' => true,
