@@ -131,12 +131,35 @@ function fetchScores() {
     fetch('./get_scores.php?game_id=' + game_id)
         .then(response => response.json())
         .then(scores => {
+            scores.sort((a, b) => {
+                if (b.score !== a.score) {
+                    return b.score - a.score;
+                }
+                return a.played_seconds - b.played_seconds;
+            });
+
             scoreTableBody.innerHTML = '';
-            scores.forEach(function (score) {
+
+            let currentRank = 0;
+            let lastScore = null;
+            let lastTime = null;
+            let sameRankCount = 0;
+
+            scores.forEach(function (score, index) {
+                if (score.score === lastScore && score.played_seconds === lastTime) {
+                    sameRankCount++;
+                } else {
+                    currentRank = index + 1;
+                    sameRankCount = 1;
+                    lastScore = score.score;
+                    lastTime = score.played_seconds;
+                }
+
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${score.name || 'Unknown'}</td>
-                    <td>${score.username || 'Unknown'}</td>
+                    <td>${currentRank}</td>
+                    <td>${score.name}</td>
+                    <td>${score.username}</td>
                     <td>${score.score}</td>
                     <td>${score.played_seconds}</td>
                 `;
@@ -145,7 +168,7 @@ function fetchScores() {
         })
         .catch(function (err) {
             console.error('Error fetching scores:', err);
-            scoreTableBody.innerHTML = '<tr><td colspan="4">Error loading scores</td></tr>';
+            scoreTableBody.innerHTML = '<tr><td colspan="5">Error loading scores</td></tr>';
         });
 }
 

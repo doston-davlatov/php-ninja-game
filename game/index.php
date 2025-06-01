@@ -40,6 +40,7 @@ $game_id = $game[0]['id'];
                 <table class="score-table">
                     <thead>
                         <tr>
+                            <th>№</th>
                             <th>Name</th>
                             <th>Username</th>
                             <th>Score</th>
