@@ -13,7 +13,7 @@ $db = new Database();
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode([
         'success' => false,
-        'message' => 'Only POST method is allowed'
+        'message' => 'Faqat POST usuli ruxsat etiladi'
     ]);
     exit;
 }
@@ -24,7 +24,7 @@ $score = (int) ($_POST['score'] ?? 0);
 $played_seconds = (int) ($_POST['played_seconds'] ?? 0);
 
 if (!$game_id || !$user_id) {
-    exit(json_encode(['success' => false, 'message' => 'Invalid data']));
+    exit(json_encode(['success' => false, 'message' => 'Maʼlumotlar noto‘g‘ri']));
 }
 
 $existing = $db->select('game_records', '*', 'game_id = ? AND user_id = ?', [$game_id, $user_id], 'ii');
@@ -38,9 +38,9 @@ if (!$existing) {
     ]);
 
     if ($inserted) {
-        echo json_encode(['success' => true, 'message' => 'Game created successfully']);
+        echo json_encode(['success' => true, 'message' => 'O‘yin muvaffaqiyatli yaratildi']);
     } else {
-        echo json_encode(['success' => false, 'message' => 'Insert failed']);
+        echo json_encode(['success' => false, 'message' => 'Qo‘shish amalga oshmadi']);
     }
 } else {
     $old = $existing[0];
@@ -51,11 +51,11 @@ if (!$existing) {
         ], 'id = ?', [$old['id']], 'i');
 
         if ($updated) {
-            echo json_encode(['success' => true, 'message' => 'Game updated successfully']);
+            echo json_encode(['success' => true, 'message' => 'O‘yin yangilandi']);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Update failed']);
+            echo json_encode(['success' => false, 'message' => 'Yangilash amalga oshmadi']);
         }
     } else {
-        echo json_encode(['success' => true, 'message' => 'No update needed']);
+        echo json_encode(['success' => true, 'message' => 'Yangilash kerak emas']);
     }
 }

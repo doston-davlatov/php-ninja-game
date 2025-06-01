@@ -13,7 +13,7 @@ $db = new Database();
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode([
         'success' => false,
-        'message' => 'Only POST method is allowed'
+        'message' => 'Faqat POST usuli qo‘llaniladi'
     ]);
     exit;
 }
@@ -24,7 +24,7 @@ $id = $_POST['id'] ?? null;
 if (!$id) {
     echo json_encode([
         'success' => false,
-        'message' => 'ID is required.'
+        'message' => 'ID majburiy'
     ]);
     exit;
 }
@@ -34,12 +34,12 @@ $deleted = $db->delete('games', 'id = ? AND user_id = ?', [$id, $user_id], 'ii')
 if ($deleted) {
     echo json_encode([
         'success' => true,
-        'message' => 'Game link deleted successfully.'
+        'message' => 'O‘yin havolasi muvaffaqiyatli o‘chirildi'
     ]);
 } else {
     echo json_encode([
         'success' => false,
-        'message' => 'Failed to delete game. Please try again.'
+        'message' => 'O‘chirishda xatolik. Iltimos, qayta urinib ko‘ring'
     ]);
 }
 exit;

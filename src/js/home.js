@@ -2,13 +2,13 @@ const createBtn = document.getElementById('createBtn');
 createBtn.addEventListener('click', () => {
     Swal.fire({
         icon: 'question',
-        title: 'Create New Game?',
-        text: 'Do you really want to generate a new game link?',
+        title: 'Yangi oʻyin yaratish?',
+        text: 'Haqiqatan ham yangi oʻyin havolasini yaratmoqchimisiz?',
         background: '#000000',
         color: '#e0e0e0',
         showCancelButton: true,
-        confirmButtonText: 'Yes, create it!',
-        cancelButtonText: 'Cancel',
+        confirmButtonText: 'Ha, yarat!',
+        cancelButtonText: 'Bekor qilish',
         confirmButtonColor: '#00cc66',
         cancelButtonColor: '#555555',
     }).then((result) => {
@@ -35,14 +35,14 @@ function generateGameLink() {
         body: formData
     })
         .then(res => {
-            if (!res.ok) throw new Error('HTTP error ' + res.status);
+            if (!res.ok) throw new Error('HTTP xatosi ' + res.status);
             return res.json();
         })
         .then(data => {
             if (data.success) {
                 Swal.fire({
                     icon: 'success',
-                    title: 'Success!',
+                    title: 'Muvaffaqiyat!',
                     text: data.message,
                     background: '#000000',
                     color: '#e0e0e0',
@@ -56,7 +56,7 @@ function generateGameLink() {
             } else {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Failed!',
+                    title: 'Muvaffaqiyatsiz!',
                     text: data.message,
                     background: '#000000',
                     color: '#e0e0e0',
@@ -66,11 +66,11 @@ function generateGameLink() {
             }
         })
         .catch(err => {
-            console.error('Fetch error:', err);
+            console.error('Fetch xatosi:', err);
             Swal.fire({
                 icon: 'error',
-                title: 'Network Error!',
-                text: 'Something went wrong. Please check your connection and try again.',
+                title: 'Tarmoq xatosi!',
+                text: 'Nimadir noto‘g‘ri ketdi. Iltimos, ulanishingizni tekshiring va qayta urinib ko‘ring.',
                 background: '#000000',
                 color: '#e0e0e0',
                 confirmButtonColor: '#ff3333',
@@ -134,25 +134,25 @@ function fetchGames() {
             if (data.success) {
                 renderGames(data.data);
             } else {
-                showError('Failed to fetch games.');
+                showError('O‘yinlarni olish muvaffaqiyatsiz yakunlandi.');
             }
         })
         .catch(error => {
-            console.error('Fetch error:', error);
-            showError('Network error. Try again later.');
+            console.error('Fetch xatosi:', error);
+            showError('Tarmoq xatosi. Iltimos, keyinroq qayta urinib ko‘ring.');
         });
 }
 
 function renderGames(games) {
     const myGames = document.getElementById('my-games');
-    myGames.innerHTML = '<h3>My Games</h3><br>';
+    myGames.innerHTML = '<h3>Mening oʻyinlarim</h3><br>';
 
     games.forEach((game, index) => {
         const gameItem = document.createElement('div');
         gameItem.classList.add('game-item');
 
         const date = new Date(game.created_at);
-        const formattedTime = date.toLocaleString('en-US', {
+        const formattedTime = date.toLocaleString('uz-UZ', {
             month: 'short',
             day: 'numeric',
             year: 'numeric',
@@ -166,18 +166,18 @@ function renderGames(games) {
                     <a href="${game.link}" class="game-link" target="_blank">${game.link}</a>
                     <div class="game-meta">
                         <span class="game-time"><i class="fas fa-clock icon"></i> ${formattedTime}</span>
-                        <span class="game-players"><i class="fas fa-users icon"></i> ${game.players_count} players</span>
+                        <span class="game-players"><i class="fas fa-users icon"></i> ${game.players_count} o‘yinchilar</span>
                     </div>
                 </div>
                 <div class="game-actions">
                     <button class="btn btn-secondary btn-small" onclick="copyGameLink('${game.link}', this)">
-                        <i class="fas fa-copy icon"></i> Copy
+                        <i class="fas fa-copy icon"></i> Nusxalash
                     </button>
                     <button class="btn btn-small" onclick="viewGame('${game.link}', this)">
-                        <i class="fas fa-play icon"></i> Play
+                        <i class="fas fa-play icon"></i> O‘ynash
                     </button>
                     <button class="btn btn-danger btn-small" onclick="deleteGame(${game.id}, this)">
-                        <i class="fas fa-trash icon"></i> Delete
+                        <i class="fas fa-trash icon"></i> O‘chirish
                     </button>
                 </div>
             `;
@@ -195,14 +195,14 @@ function copyGameLink(link, btn) {
         textarea.select();
         try {
             document.execCommand('copy');
-            btn.innerHTML = '<i class="fas fa-check icon"></i> Copied!';
+            btn.innerHTML = '<i class="fas fa-check icon"></i> Nusxalandi!';
             btn.style.background = 'green';
         } catch (err) {
-            showError('Copy failed.');
+            showError('Nusxalash muvaffaqiyatsiz yakunlandi.');
         }
         document.body.removeChild(textarea);
         setTimeout(() => {
-            btn.innerHTML = '<i class="fas fa-copy icon"></i> Copy';
+            btn.innerHTML = '<i class="fas fa-copy icon"></i> Nusxalash';
             btn.style.background = '';
         }, 2000);
         createParticles(btn);
@@ -210,16 +210,16 @@ function copyGameLink(link, btn) {
     }
 
     navigator.clipboard.writeText(link).then(() => {
-        btn.innerHTML = '<i class="fas fa-check icon"></i> Copied!';
+        btn.innerHTML = '<i class="fas fa-check icon"></i> Nusxalandi!';
         btn.style.background = 'green';
         setTimeout(() => {
-            btn.innerHTML = '<i class="fas fa-copy icon"></i> Copy';
+            btn.innerHTML = '<i class="fas fa-copy icon"></i> Nusxalash';
             btn.style.background = '';
         }, 2000);
         createParticles(btn);
     }).catch(err => {
-        console.error('Clipboard error:', err);
-        showError('Copy failed.');
+        console.error('Clipboard xatosi:', err);
+        showError('Nusxalash muvaffaqiyatsiz yakunlandi.');
     });
 }
 
@@ -231,13 +231,13 @@ function viewGame(link, button) {
 function deleteGame(id, button) {
     Swal.fire({
         icon: 'warning',
-        title: 'Are you sure?',
-        text: 'Do you really want to delete this game?',
+        title: 'Ishonchingiz komilmi?',
+        text: 'Haqiqatan ham bu o‘yinni o‘chirmoqchimisiz?',
         background: '#000000',
         color: '#e0e0e0',
         showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'Cancel',
+        confirmButtonText: 'Ha, o‘chir!',
+        cancelButtonText: 'Bekor qilish',
         confirmButtonColor: '#ff3333',
         cancelButtonColor: '#555555',
     }).then((result) => {
@@ -254,7 +254,7 @@ function deleteGame(id, button) {
                     if (data.success) {
                         Swal.fire({
                             icon: 'success',
-                            title: 'Deleted!',
+                            title: 'O‘chirildi!',
                             text: data.message,
                             background: '#000000',
                             color: '#e0e0e0',
@@ -268,8 +268,8 @@ function deleteGame(id, button) {
                     }
                 })
                 .catch(error => {
-                    console.error('Error:', error);
-                    showError('Network error! Please try again.');
+                    console.error('Xato:', error);
+                    showError('Tarmoq xatosi! Iltimos, qayta urinib ko‘ring.');
                 });
         }
     });
@@ -277,20 +277,20 @@ function deleteGame(id, button) {
 
 function logout() {
     Swal.fire({
-        title: 'Are you sure?',
-        text: "You will be logged out!",
+        title: 'Ishonchingiz komilmi?',
+        text: "Siz tizimdan chiqasiz!",
         icon: 'warning',
         background: '#000000',
         color: '#e0e0e0',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, log me out!'
+        confirmButtonText: 'Ha, chiqar!'
     }).then((result) => {
         if (result.isConfirmed) {
             Swal.fire({
-                title: 'Logged out!',
-                text: 'You have been successfully logged out.',
+                title: 'Chiqildi!',
+                text: 'Siz muvaffaqiyatli tizimdan chiqdingiz.',
                 icon: 'success',
                 background: '#000000',
                 color: '#e0e0e0',

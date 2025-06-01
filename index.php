@@ -8,7 +8,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uz">
 
 <head>
     <meta charset="UTF-8">
@@ -23,14 +23,14 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     <header>
         <h1><i class="fas fa-user-ninja icon"></i> Black Ninja</h1>
         <button type="button" class="btn btn-danger" onclick="logout()"><i class="fas fa-sign-out-alt icon"></i>
-            Logout</button>
+            Chiqish</button>
     </header>
 
     <div class="container">
-        <button id="createBtn" class="btn"><i class="fas fa-plus icon"></i>Create New Game</button>
+        <button id="createBtn" class="btn"><i class="fas fa-plus icon"></i>Yangi oʻyin yaratish</button>
 
         <div id="my-games">
-            <h3>My Games</h3>
+            <h3>Mening oʻyinlarim</h3>
         </div>
     </div>
 

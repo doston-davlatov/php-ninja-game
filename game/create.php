@@ -13,7 +13,7 @@ $db = new Database();
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode([
         'success' => false,
-        'message' => 'Only POST method is allowed'
+        'message' => 'Faqat POST usuli qo‘llaniladi'
     ]);
     exit;
 }
@@ -25,7 +25,7 @@ $created_at = date('Y-m-d H:i:s');
 if (empty($link)) {
     echo json_encode([
         'success' => false,
-        'message' => 'Link is required'
+        'message' => 'Havola majburiy'
     ]);
     exit;
 }
@@ -39,12 +39,12 @@ $inserted = $db->insert('games', [
 if ($inserted) {
     echo json_encode([
         'success' => true,
-        'message' => 'Game created successfully'
+        'message' => 'O‘yin muvaffaqiyatli yaratildi'
     ]);
 } else {
     echo json_encode([
         'success' => false,
-        'message' => 'Database insert failed'
+        'message' => 'Bazaga yozishda xatolik'
     ]);
 }
 exit;

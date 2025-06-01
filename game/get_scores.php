@@ -14,7 +14,7 @@ $game_id = $_GET['game_id'] ?? null;
 if (!$game_id) {
     echo json_encode([
         'status' => false,
-        'message' => 'Game ID is required.'
+        'message' => 'O‘yin ID si majburiy'
     ]);
     exit;
 }
