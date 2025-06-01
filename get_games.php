@@ -1,0 +1,26 @@
+<?php
+header('Content-Type: application/json');
+
+echo json_encode([
+    'success' => true,
+    'message' => 'Get game successfully!',
+    'data' => [
+        [
+            'game' => [
+                'id' => 1,
+                'user_id' => 1,
+                'link' => 'https://example.com/game',
+                'created_at' => date('Y-m-d H:i:s')
+            ]
+        ],
+        [
+            'game' => [
+                'id' => 2,
+                'user_id' => 2,
+                'link' => 'https://example.com/game2',
+                'created_at' => date('Y-m-d H:i:s')
+            ]
+        ]
+    ]
+]);
+exit;

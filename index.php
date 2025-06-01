@@ -68,7 +68,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) rotate(0deg);
-            color: rgba(255, 193, 7, 0.1);
+            color: rgba(255, 0, 0, 0.1);
             font-size: 120px;
             opacity: 0;
             animation: shurikenSpin 15s linear infinite;
@@ -98,7 +98,7 @@
             border-radius: 12px;
             box-shadow:
                 0 0 30px rgba(0, 0, 0, 0.6),
-                0 0 50px rgba(255, 193, 7, 0.3);
+                0 0 50px rgba(255, 0, 0, 0.3);
             backdrop-filter: blur(12px);
             text-align: center;
             animation: slideIn 1s ease-out;
@@ -117,27 +117,27 @@
         }
 
         h1 {
-            color: #ffc107;
+            color: #ff0000;
             font-size: 3em;
             margin-bottom: 25px;
             text-shadow:
-                0 0 10px rgba(255, 193, 7, 0.8),
-                0 0 20px rgba(255, 193, 7, 0.4);
+                0 0 10px rgba(255, 0, 0, 0.8),
+                0 0 20px rgba(255, 0, 0, 0.4);
             animation: flickerGlow 3s ease-in-out infinite alternate;
         }
 
         @keyframes flickerGlow {
             from {
-                text-shadow: 0 0 10px rgba(255, 193, 7, 0.8), 0 0 20px rgba(255, 193, 7, 0.4);
+                text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.4);
             }
 
             to {
-                text-shadow: 0 0 15px rgba(255, 193, 7, 1), 0 0 30px rgba(255, 193, 7, 0.6);
+                text-shadow: 0 0 15px rgba(255, 0, 0, 1), 0 0 30px rgba(255, 0, 0, 0.6);
             }
         }
 
         .btn {
-            background: linear-gradient(45deg, #ff9800, #ffca28);
+            background: linear-gradient(45deg, #ff0000, #b71c1c);
             color: #fff;
             border: none;
             padding: 12px 25px;
@@ -174,9 +174,9 @@
         .btn:hover {
             transform: translateY(-2px);
             box-shadow:
-                0 6px 18px rgba(255, 193, 7, 0.7),
+                0 6px 18px rgba(255, 0, 0, 0.7),
                 inset 0 1px 0 rgba(255, 255, 255, 0.4);
-            background: linear-gradient(45deg, #fb8c00, #ffb300);
+            background: linear-gradient(45deg, #d32f2f, #b71c1c);
         }
 
         .btn:active {
@@ -187,108 +187,34 @@
         }
 
         .btn-secondary {
-            background: linear-gradient(45deg, #455a64, #607d8b);
+            background: linear-gradient(45deg, #212121, #424242);
         }
 
         .btn-secondary:hover {
-            background: linear-gradient(45deg, #37474f, #546e7a);
+            background: linear-gradient(45deg, #1b1b1b, #333333);
             box-shadow:
-                0 6px 18px rgba(96, 125, 139, 0.7),
+                0 6px 18px rgba(66, 66, 66, 0.7),
                 inset 0 1px 0 rgba(255, 255, 255, 0.4);
         }
 
         .btn-danger {
-            background: linear-gradient(45deg, #d81b60, #f06292);
+            background: linear-gradient(45deg, #b71c1c, #d32f2f);
         }
 
         .btn-danger:hover {
-            background: linear-gradient(45deg, #c2185b, #d81b60);
+            background: linear-gradient(45deg, #9c0000, #b71c1c);
             box-shadow:
-                0 6px 18px rgba(216, 27, 96, 0.7),
+                0 6px 18px rgba(183, 28, 28, 0.7),
                 inset 0 1px 0 rgba(255, 255, 255, 0.4);
-        }
-
-        .new-game {
-            margin-top: 25px;
-            padding: 15px;
-            background: rgba(23, 28, 32, 0.9);
-            border-radius: 8px;
-            display: none;
-            opacity: 0;
-            transform: translateY(15px);
-            transition: all 0.5s ease;
-            box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
-        }
-
-        .new-game.show {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-            animation: pulseResult 2.5s ease-in-out infinite alternate;
-        }
-
-        @keyframes pulseResult {
-            from {
-                box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
-            }
-
-            to {
-                box-shadow: 0 0 30px rgba(76, 175, 80, 0.7);
-            }
-        }
-
-        .link {
-            color: #4caf50;
-            font-weight: 600;
-            font-size: 1em;
-            word-break: break-all;
-            margin: 10px 0;
-            padding: 10px;
-            background: rgba(17, 20, 23, 0.9);
-            border-radius: 6px;
-            box-shadow: 0 0 12px rgba(76, 175, 80, 0.4);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .link:hover {
-            background: rgba(17, 20, 23, 1);
-            color: #81c784;
-            box-shadow: 0 0 18px rgba(76, 175, 80, 0.6);
-        }
-
-        .icon {
-            margin-right: 8px;
-            font-size: 1.1em;
-        }
-
-        .button-group {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 15px;
-        }
-
-        #open-game {
-            display: none;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.5s ease;
-        }
-
-        #open-game.show {
-            display: inline-flex;
-            opacity: 1;
-            transform: translateY(0);
         }
 
         #my-games {
             margin-top: 25px;
             padding: 20px;
-            background: linear-gradient(45deg, rgba(23, 28, 32, 0.95), rgba(44, 54, 62, 0.95));
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0.95), rgba(33, 33, 33, 0.95));
             border-radius: 10px;
             box-shadow:
-                0 0 25px rgba(255, 193, 7, 0.5),
+                0 0 25px rgba(255, 0, 0, 0.5),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
             width: 100%;
             max-height: 350px;
@@ -314,9 +240,9 @@
             justify-content: space-between;
             padding: 12px;
             margin-bottom: 8px;
-            background: rgba(17, 20, 23, 0.9);
+            background: rgba(0, 0, 0, 0.9);
             border-radius: 6px;
-            box-shadow: 0 0 12px rgba(255, 193, 7, 0.3);
+            box-shadow: 0 0 12px rgba(255, 0, 0, 0.3);
             opacity: 0;
             transform: translateX(-15px);
             transition: all 0.4s ease;
@@ -333,7 +259,7 @@
         }
 
         .game-link {
-            color: #4caf50;
+            color: #ff0000;
             font-weight: 600;
             font-size: 0.95em;
             word-break: break-all;
@@ -343,11 +269,11 @@
         }
 
         .game-link:hover {
-            color: #81c784;
+            color: #ef5350;
         }
 
         .game-time {
-            color: #90a4ae;
+            color: #757575;
             font-size: 0.85em;
         }
 
@@ -365,7 +291,7 @@
             position: absolute;
             width: 10px;
             height: 10px;
-            background: #ff9800;
+            background: #ff0000;
             border-radius: 50%;
             pointer-events: none;
             animation: particleBurst 0.5s ease-out forwards;
@@ -394,16 +320,15 @@
 
         #my-games::-webkit-scrollbar-track {
             background: rgba(0, 0, 0, 0.4);
-            border-radius: 3px;
         }
 
         #my-games::-webkit-scrollbar-thumb {
-            background: #ff9800;
+            background: #ff0000;
             border-radius: 3px;
         }
 
         #my-games::-webkit-scrollbar-thumb:hover {
-            background: #fb8c00;
+            background: #d32f2f;
         }
 
         @media (max-width: 768px) {
@@ -421,7 +346,6 @@
                 font-size: 1em;
             }
 
-            .link,
             .game-link {
                 font-size: 0.95em;
                 padding: 8px;
@@ -462,11 +386,6 @@
                 font-size: 0.8em;
             }
 
-            .button-group {
-                flex-direction: column;
-                gap: 8px;
-            }
-
             body::after {
                 font-size: 80px;
             }
@@ -478,19 +397,6 @@
     <div class="container">
         <h1><i class="fas fa-user-ninja icon"></i> Black Ninja</h1>
         <button id="createBtn" class="btn"><i class="fas fa-play icon"></i>Create Game Link</button>
-
-        <div class="new-game">
-            <h3>New Game Link</h3>
-            <div id="gameLink" class="link"></div>
-            <div class="button-group">
-                <button id="copyBtn" class="btn btn-secondary">
-                    <i class="fas fa-copy icon"></i>Copy Link
-                </button>
-                <a id="open-game" href="#" class="btn" target="_blank">
-                    <i class="fas fa-gamepad icon"></i>Open Game
-                </a>
-            </div>
-        </div>
 
         <div id="my-games">
             <h3>Previous Games</h3>
@@ -504,7 +410,6 @@
         let games = JSON.parse(localStorage.getItem('blackNinjaGames')) || [];
 
         document.getElementById('createBtn').addEventListener('click', generateGameLink);
-        document.getElementById('copyBtn').addEventListener('click', copyGameLink);
 
         function generateGameLink(event) {
             const gameId = Math.random().toString(36).substring(2, 18);
@@ -524,22 +429,13 @@
                             icon: 'success',
                             title: 'Game Created!',
                             text: 'Your game link has been successfully created.',
-                            background: '#171c20',
+                            background: '#000000',
                             color: '#e0e0e0',
-                            confirmButtonColor: '#ff9800',
+                            confirmButtonColor: '#ff0000',
                             confirmButtonText: 'Awesome!',
                             timer: 2000,
                             timerProgressBar: true
                         });
-
-                        // Update UI
-                        document.getElementById('gameLink').textContent = gameLink;
-                        const openGameBtn = document.getElementById('open-game');
-                        openGameBtn.href = gameLink;
-                        openGameBtn.classList.add('show');
-
-                        const newGameDiv = document.querySelector('.new-game');
-                        newGameDiv.classList.add('show');
 
                         // Add to games list
                         games.push({ link: gameLink, timestamp });
@@ -552,9 +448,9 @@
                             icon: 'error',
                             title: 'Error',
                             text: 'Failed to create game link. Please try again.',
-                            background: '#171c20',
+                            background: '#000000',
                             color: '#e0e0e0',
-                            confirmButtonColor: '#ff9800'
+                            confirmButtonColor: '#ff0000'
                         });
                     }
                 })
@@ -564,23 +460,22 @@
                         icon: 'error',
                         title: 'Error',
                         text: 'Network error occurred. Please try again.',
-                        background: '#171c20',
+                        background: '#000000',
                         color: '#e0e0e0',
-                        confirmButtonColor: '#ff9800'
+                        confirmButtonColor: '#ff0000'
                     });
                 });
         }
 
-        function copyGameLink(event) {
-            const gameLink = document.getElementById('gameLink').textContent;
+        function copyGameLink(link, event) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(gameLink).then(() => {
+                navigator.clipboard.writeText(link).then(() => {
                     showCopyFeedback(event);
                 }).catch(() => {
-                    fallbackCopy(gameLink, event);
+                    fallbackCopy(link, event);
                 });
             } else {
-                fallbackCopy(gameLink, event);
+                fallbackCopy(link, event);
             }
         }
 
@@ -602,10 +497,10 @@
         }
 
         function showCopyFeedback(event) {
-            const copyBtn = document.getElementById('copyBtn');
+            const copyBtn = event.currentTarget;
             const originalHtml = copyBtn.innerHTML;
             copyBtn.innerHTML = '<i class="fas fa-check icon"></i>Copied!';
-            copyBtn.style.background = 'linear-gradient(45deg, #4caf50, #81c784)';
+            copyBtn.style.background = 'linear-gradient(45deg, #ff0000, #ef5350)';
 
             setTimeout(() => {
                 copyBtn.innerHTML = originalHtml;
@@ -661,6 +556,9 @@
                         <div class="game-time">Created: ${formattedTime}</div>
                     </div>
                     <div class="game-actions">
+                        <button class="btn btn-secondary btn-small" onclick="copyGameLink('${game.link}', event)">
+                            <i class="fas fa-copy icon"></i>Copy
+                        </button>
                         <button class="btn btn-small" onclick="viewGame('${game.link}')">
                             <i class="fas fa-eye icon"></i>View
                         </button>
