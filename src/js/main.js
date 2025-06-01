@@ -113,7 +113,7 @@ function saveScore() {
     playedSeconds = Math.floor((gameEndTime - gameStartTime) / 1000);
     timeElement.innerText = `Time: ${playedSeconds}s`;
 
-    fetch('update_score.php', {
+    fetch('score_update.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',

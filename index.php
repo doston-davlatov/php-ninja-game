@@ -581,7 +581,7 @@
             const timestamp = Date.now();
             const gameLink = `${window.location.origin}/game/link=${gameId}-${timestamp.toString().slice(-10)}`;
 
-            fetch('create_game.php', {
+            fetch('game/create.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ link: gameLink })
@@ -662,7 +662,7 @@
         }
 
         function fetchGames() {
-            fetch('get_games.php')
+            fetch('game/get.php')
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
@@ -763,7 +763,7 @@
         }
 
         function deleteGame(id, button) {
-            fetch('delete_game.php', {
+            fetch('game/delete.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id })
