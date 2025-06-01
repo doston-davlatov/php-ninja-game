@@ -50,6 +50,7 @@ const restartButton = document.getElementById("restart");
 const scoreElement = document.getElementById("score");
 const timeElement = document.getElementById("time");
 const leaderboardButton = document.getElementById("leaderboard-button");
+const homeA = document.getElementById("home-a");
 const scoreModal = document.getElementById("score-modal");
 const closeModal = document.getElementById("close-modal");
 const scoreTableBody = document.getElementById("score-table-body");
@@ -196,7 +197,7 @@ window.addEventListener("keydown", function (event) {
 });
 
 window.addEventListener("mousedown", function (event) {
-    if (phase === "waiting" && event.target !== leaderboardButton && !scoreModal.contains(event.target)) {
+    if (phase === "waiting" && event.target !== homeA && event.target !== leaderboardBHomeutton && !scoreModal.contains(event.target)) {
         if (!gameStartTime) {
             gameStartTime = Date.now();
         }
