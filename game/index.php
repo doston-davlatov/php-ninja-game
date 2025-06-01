@@ -31,13 +31,11 @@ $game_id = $game[0]['id'];
 </head>
 
 <body>
-
-
     <div class="container">
         <button class="score-modal-toggle" id="score-modal-toggle">All Scores</button>
         <div class="score-modal" id="score-modal">
             <div class="score-modal-content">
-                <button class="close-modal" id="close-modal">&times;</button>
+                <button class="close-modal" id="close-modal">×</button>
                 <h2>Leaderboard</h2>
                 <table class="score-table">
                     <thead>
