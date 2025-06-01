@@ -2,12 +2,12 @@ html,
 body {
   height: 100%;
   margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
 }
 
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   cursor: pointer;
-  overflow: hidden;
 }
 
 .container {
@@ -34,20 +34,13 @@ body {
   font-size: 1.5em;
   font-weight: 900;
   color: #fff;
-  text-shadow:
-    2px 2px 0 #000,
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000;
+  text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
   padding: 10px 15px;
   border-radius: 8px;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(5px);
   border: 2px solid rgba(255, 255, 255, 0.2);
-  box-shadow:
-    0 4px 6px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
 }
 
@@ -76,68 +69,6 @@ body {
   to {
     transform: scale(1.05);
     box-shadow: 0 0 10px 5px rgba(255, 215, 0, 0);
-  }
-}
-
-#create-new-game {
-  font-family: 'Arial', sans-serif;
-  font-size: 1.2em;
-  font-weight: 900;
-  color: #fff;
-  text-shadow:
-    2px 2px 0 #000,
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000;
-  padding: 10px 15px;
-  border-radius: 8px;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(5px);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  box-shadow:
-    0 4px 6px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
-  cursor: pointer;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-#create-new-game::before {
-  content: "🔄 ";
-}
-
-#create-new-game:hover {
-  background: rgba(30, 30, 30, 0.8);
-  transform: translateY(-2px);
-  box-shadow:
-    0 6px 8px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-#create-new-game:active {
-  transform: translateY(1px);
-  box-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-#create-new-game.game-created {
-  animation: bounce 0.5s;
-  background: rgba(0, 100, 0, 0.7);
-}
-
-@keyframes bounce {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-10px);
   }
 }
 
@@ -189,8 +120,7 @@ body {
   transition: opacity 2s;
 }
 
-/* Score Modal Styles */
-.score-modal-toggle {
+.leaderboard-button {
   position: absolute;
   top: 20px;
   left: 20px;
@@ -198,35 +128,26 @@ body {
   font-size: 1.2em;
   font-weight: 900;
   color: #fff;
-  text-shadow:
-    2px 2px 0 #000,
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000;
+  text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
   padding: 10px 15px;
   border-radius: 8px;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(5px);
   border: 2px solid rgba(255, 255, 255, 0.2);
-  box-shadow:
-    0 4px 6px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
   cursor: pointer;
   z-index: 100;
 }
 
-.score-modal-toggle::before {
+.leaderboard-button::before {
   content: "🏆 ";
 }
 
-.score-modal-toggle:hover {
+.leaderboard-button:hover {
   background: rgba(30, 30, 30, 0.8);
   transform: translateY(-2px);
-  box-shadow:
-    0 6px 8px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .score-modal {
@@ -299,16 +220,10 @@ body {
   border: none;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .result {
     top: 10px;
     right: 10px;
-  }
-
-  #create-new-game {
-    font-size: 1em;
-    padding: 8px 12px;
   }
 
   #restart {
@@ -321,7 +236,7 @@ body {
     padding: 10px;
   }
 
-  .score-modal-toggle {
+  .leaderboard-button {
     font-size: 1em;
     padding: 8px 12px;
   }
@@ -336,4 +251,35 @@ body {
     padding: 8px;
     font-size: 0.9em;
   }
+}
+
+.close-modal {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 1.8em;
+  color: #333;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.close-modal:hover {
+  background: #ff4d4d;
+  color: #fff;
+  transform: rotate(90deg);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.close-modal:focus {
+  outline: none;
+  background: #ff4d4d;
+  color: #fff;
 }
