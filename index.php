@@ -839,7 +839,7 @@
                                 fetchGames();
                                 createParticles(button);
                             } else {
-                                showError(data.message || 'Something went wrong.');
+                                showError(data.message);
                             }
                         })
                         .catch(error => {

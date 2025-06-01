@@ -111,25 +111,23 @@ function generatePlatform() {
 }
 
 function saveScore() {
-    if (!gameStartTime) return; // Don't save score if game hasn't started
+    if (!gameStartTime) return;
     const gameEndTime = Date.now();
     playedSeconds = Math.floor((gameEndTime - gameStartTime) / 1000);
     timeElement.innerText = `Time: ${playedSeconds}s`;
 
-    fetch('../score_update.php', {
+    console.log(`score=${score}&played_seconds=${playedSeconds}&game_id=${game_id}`)
+
+    fetch('./score_update.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: `score=${score}&played_seconds=${playedSeconds}`
+        body: `score=${score}&played_seconds=${playedSeconds}&game_id=${game_id}`
     })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data.message);
-        })
-        .catch(error => {
-            console.error('Error saving score:', error);
-        });
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .catch(err => console.error(err));
 }
 
 // Event listeners

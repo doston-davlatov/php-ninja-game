@@ -6,13 +6,20 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     exit;
 }
 
-$link = $_GET['link'] ?? null;
+include '../config.php';
+$db = new Database();
 
-if (!$link) {
+$link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+$game = $db->select('games', '*', 'link = ?', [$link], 's');
+if (!isset($game[0]['id'])) {
     header('Location: ../');
     exit;
 }
+$game_id = $game[0]['id'];
 ?>
+<script>
+    const game_id = <?= json_encode($game_id); ?>;
+</script>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,6 +43,7 @@ if (!$link) {
         <div id="perfect">Ajoyib</div>
         <button id="restart">RESTART</button>
     </div>
+
     <script src="../src/js/main.js"></script>
 </body>
 
