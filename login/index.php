@@ -6,6 +6,10 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     exit;
 }
 
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 include "../config.php";
 $db = new Database();
 
@@ -15,8 +19,15 @@ define('PASSWORD_MIN_LENGTH', 8);
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
     header('Content-Type: application/json');
-
     $response = ['success' => false, 'title' => 'Error', 'message' => ''];
+
+    $csrf_token = $_POST['csrf_token'] ?? '';
+    if (!hash_equals($_SESSION['csrf_token'], $csrf_token)) {
+        $response['title'] = 'Security Error';
+        $response['message'] = 'Invalid CSRF token. Please try again.';
+        echo json_encode($response);
+        exit;
+    }
 
     $username = strtolower(trim($_POST['username'] ?? ''));
     $password = $_POST['password'] ?? '';
@@ -41,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         echo json_encode($response);
         exit;
     }
+
     if (strlen($password) < PASSWORD_MIN_LENGTH) {
         $response['title'] = 'Invalid Password';
         $response['message'] = 'Password must be at least ' . PASSWORD_MIN_LENGTH . ' characters long.';
@@ -116,6 +128,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                     <div class="card-body p-4">
                         <h2 class="text-center mb-4">Login</h2>
                         <form id="loginForm" method="POST">
+                            <input type="hidden" name="csrf_token"
+                                value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
                             <div class="mb-3">
                                 <label for="username" class="form-label">Username</label>
                                 <input type="text" class="form-control" name="username" id="username"
@@ -143,14 +157,12 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             </div>
         </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function togglePassword(fieldId) {
             const input = document.getElementById(fieldId);
             const button = input.nextElementSibling;
             const icon = button.querySelector('i');
-
             if (input.type === 'password') {
                 input.type = 'text';
                 icon.classList.replace('fa-eye', 'fa-eye-slash');
@@ -159,15 +171,11 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 icon.classList.replace('fa-eye-slash', 'fa-eye');
             }
         }
-
         document.getElementById('loginForm').addEventListener('submit', async function (e) {
             e.preventDefault();
-
             const inputs = document.querySelectorAll('input');
             inputs.forEach(input => input.classList.remove('error-input'));
-
             const formData = new FormData(this);
-
             try {
                 const response = await fetch('', {
                     method: 'POST',
@@ -177,7 +185,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                     body: formData
                 });
                 const result = await response.json();
-
                 if (result.success) {
                     Swal.fire({
                         icon: 'success',
@@ -185,20 +192,20 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                         text: result.message,
                         showConfirmButton: false,
                         timer: 1500
-                    }).then(() => {
-                        window.location.href = './';
-                    });
+                    }).then(() =>
+                        window.location.href = new URLSearchParams(window.location.search).get('redirect_url') || '../');
                 } else {
                     Swal.fire({
                         icon: 'error',
                         title: result.title,
                         text: result.message
                     });
-
                     if (result.title.includes('Username')) {
                         document.getElementById('username').classList.add('error-input');
                     } else if (result.title.includes('Password')) {
                         document.getElementById('password').classList.add('error-input');
+                    } else if (result.title.includes('CSRF')) {
+                        inputs.forEach(input => input.classList.add('error-input'));
                     }
                 }
             } catch (error) {

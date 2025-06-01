@@ -6,6 +6,10 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     exit;
 }
 
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 include "../config.php";
 $db = new Database();
 
@@ -16,8 +20,15 @@ define('PASSWORD_PATTERN', '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Content-Type: application/json');
-
     $response = ['success' => false, 'title' => 'Error', 'message' => ''];
+
+    $csrf_token = $_POST['csrf_token'] ?? '';
+    if (!hash_equals($_SESSION['csrf_token'], $csrf_token)) {
+        $response['title'] = 'Security Error';
+        $response['message'] = 'Invalid CSRF token. Please try again.';
+        echo json_encode($response);
+        exit;
+    }
 
     $name = trim($_POST['name'] ?? '');
     $username = strtolower(trim($_POST['username'] ?? ''));
@@ -56,9 +67,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode($response);
         exit;
     }
-    if (!preg_match(PASSWORD_PATTERN, $password)) {
-        $response['title'] = 'Weak Password';
-        $response['message'] = 'Password must be at least ' . PASSWORD_MIN_LENGTH . ' characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&).';
+
+    if (strlen($password) < PASSWORD_MIN_LENGTH) {
+        $response['title'] = 'Invalid Password';
+        $response['message'] = 'Password must be at least ' . PASSWORD_MIN_LENGTH . ' characters long.';
         echo json_encode($response);
         exit;
     }
@@ -137,6 +149,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="card-body p-4">
                         <h2 class="text-center mb-4">Create Account</h2>
                         <form id="signupForm" method="POST">
+                            <input type="hidden" name="csrf_token"
+                                value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
                             <div class="mb-3">
                                 <label for="name" class="form-label">Full Name</label>
                                 <input type="text" class="form-control" id="name" name="name"
@@ -160,10 +174,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <i class="fas fa-eye"></i>
                                     </button>
                                 </div>
-                                <small class="form-text text-muted">
-                                    Password must include at least one uppercase letter, one lowercase letter, one
-                                    number, and one special character (@$!%*?&).
-                                </small>
                             </div>
                             <div class="mb-3 position-relative">
                                 <label for="confirm_password" class="form-label">Confirm Password</label>
@@ -179,22 +189,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                             <button type="submit" class="btn btn-primary w-100">Sign Up</button>
                         </form>
-                        <p class="text-center mt-3">
-                            Already have an account? <a href="../login/">Login</a>
-                        </p>
+                        <p class="text-center mt-3">Already have an account? <a href="../login/">Login</a></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function togglePassword(fieldId) {
             const input = document.getElementById(fieldId);
             const button = input.nextElementSibling;
             const icon = button.querySelector('i');
-
             if (input.type === 'password') {
                 input.type = 'text';
                 icon.classList.replace('fa-eye', 'fa-eye-slash');
@@ -203,13 +209,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 icon.classList.replace('fa-eye-slash', 'fa-eye');
             }
         }
-
         document.getElementById('signupForm').addEventListener('submit', async function (e) {
             e.preventDefault();
-
             const inputs = document.querySelectorAll('input');
             inputs.forEach(input => input.classList.remove('error-input'));
-
             const formData = new FormData(this);
 
             try {
@@ -221,7 +224,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     body: formData
                 });
                 const result = await response.json();
-
                 if (result.success) {
                     Swal.fire({
                         icon: 'success',
@@ -229,9 +231,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         text: result.message,
                         showConfirmButton: false,
                         timer: 1500
-                    }).then(() => {
-                        window.location.href = './';
-                    });
+                    }).then(() => window.location.href = new URLSearchParams(window.location.search).get('redirect_url') || '../');
                 } else {
                     Swal.fire({
                         icon: 'error',
@@ -245,6 +245,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     } else if (result.title.includes('Password')) {
                         document.getElementById('password').classList.add('error-input');
                         document.getElementById('confirm_password').classList.add('error-input');
+                    } else if (result.title.includes('CSRF')) {
+                        inputs.forEach(input => input.classList.add('error-input'));
                     }
                 }
             } catch (error) {

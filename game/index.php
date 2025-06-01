@@ -1,15 +1,15 @@
 <?php
 session_start();
 
+$link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header('Location: ../login/');
+    header('Location: ../login/?redirect_url=' . urlencode($link));
     exit;
 }
 
 include "../config.php";
 $db = new Database();
 
-$link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 $game = $db->select('games', '*', 'link = ?', [$link], 's');
 if (!isset($game[0]['id'])) {
     header('Location: ../');
