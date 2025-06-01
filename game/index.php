@@ -5,6 +5,13 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header('Location: ./login/');
     exit;
 }
+
+$link = $_GET['link'] ?? null;
+
+if (!$link) {
+    header('Location: ../');
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
