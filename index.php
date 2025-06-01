@@ -16,14 +16,14 @@
 
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(145deg, #1c2526, #2e3b3e, #0a0e11);
+            background: linear-gradient(145deg, #1a1f21, #2c3538, #080b0e);
             color: #e0e0e0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding: 20px;
+            padding: 15px;
             overflow-x: hidden;
             position: relative;
         }
@@ -35,26 +35,26 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 2%, transparent 2.1%);
-            background-size: 15px 15px;
-            opacity: 0.3;
-            animation: starTwinkle 20s linear infinite;
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.2) 1.5%, transparent 1.6%);
+            background-size: 20px 20px;
+            opacity: 0.25;
+            animation: starPulse 15s linear infinite;
             z-index: -1;
         }
 
-        @keyframes starTwinkle {
+        @keyframes starPulse {
             0% {
                 background-position: 0 0;
-                opacity: 0.3;
+                opacity: 0.25;
             }
 
             50% {
-                opacity: 0.5;
+                opacity: 0.4;
             }
 
             100% {
-                background-position: 100px 100px;
-                opacity: 0.3;
+                background-position: 150px 150px;
+                opacity: 0.25;
             }
         }
 
@@ -65,47 +65,49 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%,nsl-50%) rotate(0deg);
-            color: rgba(255, 0, 0, 0.1);
-            font-size: 120px;
+            transform: translate(-50%, -50%) rotate(0deg);
+            color: rgba(255, 0, 0, 0.15);
+            font-size: 100px;
             opacity: 0;
-            animation: shurikenSpin 15s linear infinite;
+            tangent: animation: shurikenPulse 12s linear infinite;
             z-index: -2;
         }
 
-        @keyframes shurikenSpin {
+        @keyframes shurikenPulse {
             0% {
                 opacity: 0;
-                transform: translate(-50%, -50%) rotate(0deg);
+                transform: translate(-50%, -50%) rotate(0deg) scale(1);
             }
 
             50% {
-                opacity: 0.15;
+                opacity: 0.2;
+                transform: translate(-50%, -50%) rotate(180deg) scale(1.1);
             }
 
             100% {
                 opacity: 0;
-                transform: translate(-50%, -50%) rotate(360deg);
+                transform: translate(-50%, -50%) rotate(360deg) scale(1);
             }
         }
 
         .container {
-            max-width: 800px;
-            background: rgba(10, 14, 17, 0.95);
-            padding: 30px;
-            border-radius: 12px;
+            max-width: 900px;
+            width: 100%;
+            background: rgba(10, 14, 17, 0.92);
+            padding: 25px;
+            border-radius: 15px;
             box-shadow:
-                0 0 30px rgba(0, 0, 0, 0.6),
-                0 0 50px rgba(255, 0, 0, 0.3);
-            backdrop-filter: blur(12px);
+                0 0 40px rgba(0, 0, 0, 0.7),
+                0 0 60px rgba(255, 0, 0, 0.35);
+            backdrop-filter: blur(15px);
             text-align: center;
-            animation: slideIn 1s ease-out;
+            animation: slideIn 0.8s ease-out;
         }
 
         @keyframes slideIn {
             from {
                 opacity: 0;
-                transform: translateY(-30px);
+                transform: translateY(-40px);
             }
 
             to {
@@ -116,36 +118,36 @@
 
         h1 {
             color: #ff0000;
-            font-size: 3em;
+            font-size: 2.8em;
             margin-bottom: 25px;
             text-shadow:
-                0 0 10px rgba(255, 0, 0, 0.8),
-                0 0 20px rgba(255, 0, 0, 0.4);
-            animation: flickerGlow 3s ease-in-out infinite alternate;
+                0 0 12px rgba(255, 0, 0, 0.9),
+                0 0 24px rgba(255, 0, 0, 0.5);
+            animation: neonGlow 2.5s ease-in-out infinite alternate;
         }
 
-        @keyframes flickerGlow {
+        @keyframes neonGlow {
             from {
-                text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.4);
+                text-shadow: 0 0 12px rgba(255, 0, 0, 0.9), 0 0 24px rgba(255, 0, 0, 0.5);
             }
 
             to {
-                text-shadow: 0 0 15px rgba(255, 0, 0, 1), 0 0 30px rgba(255, 0, 0, 0.6);
+                text-shadow: 0 0 18px rgba(255, 0, 0, 1), 0 0 36px rgba(255, 0, 0, 0.7);
             }
         }
 
         .btn {
-            background: linear-gradient(45deg, #ff0000, #b71c1c);
+            background: linear-gradient(45deg, #ff0000, #c62828);
             color: #fff;
             border: none;
-            padding: 12px 25px;
-            font-size: 1.1em;
+            padding: 10px 25px;
+            font-size: 1em;
             font-weight: 600;
             cursor: pointer;
-            border-radius: 6px;
+            border-radius: 8px;
             box-shadow:
-                0 4px 12px rgba(0, 0, 0, 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+                0 5px 15px rgba(0, 0, 0, 0.6),
+                inset 0 2px 0 rgba(255, 255, 255, 0.25);
             transition: all 0.3s ease;
             display: inline-flex;
             align-items: center;
@@ -161,8 +163,8 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: left 0.4s;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            transition: left 0.5s;
         }
 
         .btn:hover::before {
@@ -170,79 +172,60 @@
         }
 
         .btn:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px);
             box-shadow:
-                0 6px 18px rgba(255, 0, 0, 0.7),
-                inset 0 1px 0 rgba(255, 255, 255, 0.4);
-            background: linear-gradient(45deg, #d32f2f, #b71c1c);
+                0 8px 20px rgba(255, 0, 0, 0.8),
+                inset 0 2px 0 rgba(255, 255, 255, 0.3);
+            background: linear-gradient(45deg, #e53935, #c62828);
         }
 
         .btn:active {
             transform: translateY(0);
             box-shadow:
-                0 2px 6px rgba(0, 0, 0, 0.3),
+                0 3px 8px rgba(0, 0, 0, 0.4),
                 inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
-        .btn-copy {
-            background: linear-gradient(45deg, #0288d1, #01579b);
+        .btn-secondary {
+            background: linear-gradient(45deg, #263238, #455a64);
         }
 
-        .btn-copy:hover {
-            background: linear-gradient(45deg, #039be5, #0277bd);
+        .btn-secondary:hover {
+            background: linear-gradient(45deg, #1e272e, #37474f);
             box-shadow:
-                0 6px 18px rgba(2, 136, 209, 0.7),
-                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+                0 8px 20px rgba(69, 90, 100, 0.8),
+                inset 0 2px 0 rgba(255, 255, 255, 0.3);
         }
 
-        .btn-view {
-            background: linear-gradient(45deg, #388e3c, #1b5e20);
+        .btn-danger {
+            background: linear-gradient(45deg, #c62828, #e53935);
         }
 
-        .btn-view:hover {
-            background: linear-gradient(45deg, #43a047, #2e7d32);
+        .btn-danger:hover {
+            background: linear-gradient(45deg, #b71c1c, #d32f2f);
             box-shadow:
-                0 6px 18px rgba(56, 142, 60, 0.7),
-                inset 0 1px 0 rgba(255, 255, 255, 0.4);
-        }
-
-        .btn-delete {
-            background: linear-gradient(45deg, #d81b60, #880e4f);
-        }
-
-        .btn-delete:hover {
-            background: linear-gradient(45deg, #e91e63, #ad1457);
-            box-shadow:
-                0 6px 18px rgba(216, 27, 96, 0.7),
-                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+                0 8px 20px rgba(198, 40, 40, 0.8),
+                inset 0 2px 0 rgba(255, 255, 255, 0.3);
         }
 
         #my-games {
             margin-top: 25px;
             padding: 20px;
-            background: linear-gradient(45deg, rgba(20, 20, 20, 0.95), rgba(40, 40, 40, 0.95));
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0.9), rgba(40, 40, 40, 0.9));
             border-radius: 12px;
             box-shadow:
-                0 0 20px rgba(255, 0, 0, 0.4),
-                inset 0 2px 0 rgba(255, 255, 255, 0.1);
+                0 0 30px rgba(255, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
             width: 100%;
-            max-height: 350px;
+            max-height: 400px;
             overflow-y: auto;
-            animation: fadeInGames 1s ease-out;
-            border: 1px solid rgba(255, 0, 0, 0.3);
-        }
-
-        #my-games h3 {
-            color: #ff0000;
-            font-size: 1.5em;
-            margin-bottom: 15px;
-            text-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+            animation: fadeInGames 1.2s ease-out;
         }
 
         @keyframes fadeInGames {
             from {
                 opacity: 0;
-                transform: scale(0.95);
+                transform: scale(0.9);
             }
 
             to {
@@ -256,34 +239,80 @@
             align-items: center;
             justify-content: space-between;
             padding: 15px;
-            margin-bottom: 10px;
-            background: rgba(30, 30, 30, 0.9);
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+            margin-bottom: 12px;
+            background: rgba(15, 15, 15, 0.95);
+            border-radius: 10px;
+            box-shadow:
+                0 5px 20px rgba(255, 0, 0, 0.5),
+                0 0 0 2px rgba(255, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
             opacity: 0;
-            transform: translateX(-15px);
-            transition: all 0.4s ease;
-            border-left: 4px solid #ff0000;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            animation: glowBorder 2s infinite alternate;
+        }
+
+        @keyframes glowBorder {
+            from {
+                box-shadow:
+                    0 5px 20px rgba(255, 0, 0, 0.5),
+                    0 0 0 2px rgba(255, 0, 0, 0.3);
+            }
+
+            to {
+                box-shadow:
+                    0 5px 25px rgba(255, 0, 0, 0.7),
+                    0 0 0 3px rgba(255, 0, 0, 0.5);
+            }
         }
 
         .game-item.show {
             opacity: 1;
-            transform: translateX(0);
+            transform: translateY(0);
+        }
+
+        .game-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 0, 0, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .game-item:hover::before {
+            opacity: 1;
+        }
+
+        .game-item:hover {
+            transform: translateY(-5px);
+            box-shadow:
+                0 8px 25px rgba(255, 0, 0, 0.8),
+                0 0 0 3px rgba(255, 0, 0, 0.6);
         }
 
         .game-info {
-            flex-grow: 1;
+            flex: 1;
             text-align: left;
+            padding-right: 15px;
+            overflow: hidden;
         }
 
         .game-link {
             color: #ff5252;
-            font-weight: 600;
             font-size: 0.95em;
-            word-break: break-all;
-            margin-bottom: 4px;
-            display: block;
+            font-weight: 500;
+            word-break: break-word;
             text-decoration: none;
+            display: block;
+            margin-bottom: 8px;
+            transition: color 0.3s ease;
+            overflow-wrap: anywhere;
+            white-space: normal;
         }
 
         .game-link:hover {
@@ -291,30 +320,77 @@
             text-decoration: underline;
         }
 
-        .game-time {
-            color: #b0b0b0;
+        .game-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             font-size: 0.85em;
+            color: #b0bec5;
+            flex-wrap: wrap;
+        }
+
+        .game-time {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-style: italic;
+            white-space: nowrap;
+        }
+
+        .game-players {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 0, 0, 0.3);
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            animation: pulseBadge 1.5s ease-in-out infinite;
+            white-space: nowrap;
+        }
+
+        @keyframes pulseBadge {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
 
         .game-actions {
             display: flex;
             gap: 10px;
+            align-items: center;
+            flex-shrink: 0;
         }
 
         .btn-small {
-            padding: 8px 15px;
+            padding: 7px 14px;
             font-size: 0.9em;
-            border-radius: 5px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .btn-small:hover {
+            transform: scale(1.1);
         }
 
         .particle {
             position: absolute;
-            width: 10px;
-            height: 10px;
-            background: #ff0000;
+            width: 12px;
+            height: 12px;
+            background: #ff5252;
             border-radius: 50%;
             pointer-events: none;
-            animation: particleBurst 0.5s ease-out forwards;
+            animation: particleBurst 0.6s ease-out forwards;
         }
 
         @keyframes particleBurst {
@@ -331,7 +407,7 @@
 
         .btn:hover .icon {
             transform: rotate(360deg);
-            transition: transform 0.4s ease;
+            transition: transform 0.5s ease;
         }
 
         #my-games::-webkit-scrollbar {
@@ -340,75 +416,145 @@
 
         #my-games::-webkit-scrollbar-track {
             background: rgba(0, 0, 0, 0.5);
-            border-radius: 4px;
         }
 
         #my-games::-webkit-scrollbar-thumb {
-            background: linear-gradient(45deg, #ff0000, #d32f2f);
+            background: #ff5252;
             border-radius: 4px;
         }
 
         #my-games::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(45deg, #d32f2f, #b71c1c);
+            background: #e53935;
         }
 
         @media (max-width: 768px) {
             .container {
-                padding: 20px;
-                max-width: 90%;
+                padding: 15px;
+                max-width: 100%;
             }
 
             h1 {
-                font-size: 2.4em;
+                font-size: 2.2em;
             }
 
             .btn {
-                padding: 10px 20px;
-                font-size: 1em;
-            }
-
-            .game-link {
+                padding: 8px 20px;
                 font-size: 0.95em;
-                padding: 8px;
             }
 
             .game-item {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 12px;
+                margin-bottom: 10px;
+            }
+
+            .game-info {
+                padding-right: 0;
+                margin-bottom: 12px;
+            }
+
+            .game-link {
+                font-size: 0.9em;
+                line-height: 1.4;
+            }
+
+            .game-meta {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 8px;
             }
 
+            .game-time,
+            .game-players {
+                font-size: 0.8em;
+                padding: 3px 8px;
+            }
+
             .game-actions {
                 width: 100%;
                 justify-content: space-between;
-            }
-
-            body::after {
-                font-size: 100px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 15px;
-            }
-
-            h1 {
-                font-size: 2em;
-            }
-
-            .btn {
-                padding: 8px 15px;
-                font-size: 0.9em;
+                flex-wrap: wrap;
+                gap: 8px;
             }
 
             .btn-small {
-                padding: 5px 10px;
-                font-size: 0.8em;
+                flex: 1;
+                padding: 6px 10px;
+                font-size: 0.85em;
+                min-width: 0;
             }
 
             body::after {
                 font-size: 80px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 12px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+                margin-bottom: 20px;
+            }
+
+            .btn {
+                padding: 7px 15px;
+                font-size: 0.9em;
+            }
+
+            .game-item {
+                padding: 10px;
+            }
+
+            .game-link {
+                font-size: 0.85em;
+                line-height: 1.5;
+            }
+
+            .game-time,
+            .game-players {
+                font-size: 0.75em;
+                padding: 2px 6px;
+            }
+
+            .btn-small {
+                padding: 5px 8px;
+                font-size: 0.8em;
+            }
+
+            body::after {
+                font-size: 60px;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .container {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 1.6em;
+            }
+
+            .game-link {
+                font-size: 0.8em;
+            }
+
+            .game-time,
+            .game-players {
+                font-size: 0.7em;
+            }
+
+            .btn-small {
+                padding: 4px 6px;
+                font-size: 0.75em;
             }
         }
     </style>
@@ -542,7 +688,7 @@
             const copyBtn = event.currentTarget;
             const originalHtml = copyBtn.innerHTML;
             copyBtn.innerHTML = '<i class="fas fa-check icon"></i>Copied!';
-            copyBtn.style.background = 'linear-gradient(45deg, #039be5, #0277bd)';
+            copyBtn.style.background = 'linear-gradient(45deg, #ff5252, #e53935)';
 
             setTimeout(() => {
                 copyBtn.innerHTML = originalHtml;
@@ -558,26 +704,26 @@
             const x = rect.left + rect.width / 2;
             const y = rect.top + rect.height / 2;
 
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 12; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
                 document.body.appendChild(particle);
 
                 const angle = Math.random() * 360;
-                const distance = Math.random() * 50 + 15;
+                const distance = Math.random() * 60 + 20;
                 const xPos = x + Math.cos(angle * Math.PI / 180) * distance;
                 const yPos = y + Math.sin(angle * Math.PI / 180) * distance;
 
                 particle.style.left = `${xPos}px`;
                 particle.style.top = `${yPos}px`;
 
-                setTimeout(() => particle.remove(), 500);
+                setTimeout(() => particle.remove(), 600);
             }
         }
 
         function renderGames(games) {
             const myGames = document.getElementById('my-games');
-            myGames.innerHTML = '<h3>Previous Games</h3>';
+            myGames.innerHTML = '<h3>My Games</h3><br>';
 
             games.forEach((item, index) => {
                 const game = item.game;
@@ -596,29 +742,32 @@
                 gameItem.innerHTML = `
                     <div class="game-info">
                         <a href="${game.link}" class="game-link" target="_blank">${game.link}</a>
-                        <div class="game-time">Created: ${formattedTime}</div>
+                        <div class="game-meta">
+                            <span class="game-time"><i class="fas fa-clock icon"></i> ${formattedTime}</span>
+                            <span class="game-players"><i class="fas fa-users icon"></i> ${game.player_number} Players</span>
+                        </div>
                     </div>
                     <div class="game-actions">
-                        <button class="btn btn-copy btn-small" onclick="copyGameLink('${game.link}', event)">
+                        <button class="btn btn-secondary btn-small" onclick="copyGameLink('${game.link}', event)">
                             <i class="fas fa-copy icon"></i>Copy
                         </button>
-                        <button class="btn btn-view btn-small" onclick="viewGame('${game.link}')">
+                        <button class="btn btn-small" onclick="viewGame('${game.link}')">
                             <i class="fas fa-eye icon"></i>View
                         </button>
-                        <button class="btn btn-delete btn-small" onclick="deleteGame(${game.id}, this)">
+                        <button class="btn btn-danger btn-small" onclick="deleteGame(${game.id}, this)">
                             <i class="fas fa-trash icon"></i>Delete
                         </button>
                     </div>
                 `;
                 myGames.appendChild(gameItem);
 
-                setTimeout(() => gameItem.classList.add('show'), index * 150);
+                setTimeout(() => gameItem.classList.add('show'), index * 200);
             });
         }
 
         function viewGame(link) {
             window.open(link, '_blank');
-            createParticles({ currentTarget: thequerySelector('.game-actions .btn') });
+            createParticles({ currentTarget: document.querySelector('.game-actions .btn') });
         }
 
         function deleteGame(gameId, button) {

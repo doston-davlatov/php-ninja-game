@@ -9,6 +9,7 @@ echo json_encode([
             'game' => [
                 'id' => 1,
                 'user_id' => 1,
+                'player_number' => 5,
                 'link' => 'https://example.com/game',
                 'created_at' => date('Y-m-d H:i:s')
             ]
@@ -17,6 +18,7 @@ echo json_encode([
             'game' => [
                 'id' => 2,
                 'user_id' => 2,
+                'player_number' => 10,
                 'link' => 'https://example.com/game2',
                 'created_at' => date('Y-m-d H:i:s')
             ]
