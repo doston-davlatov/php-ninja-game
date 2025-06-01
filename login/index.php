@@ -151,7 +151,12 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                             </div>
                             <button type="submit" class="btn btn-primary w-100">Login</button>
                         </form>
-                        <p class="text-center mt-3">Don't have an account? <a href="../signup/">Sign Up</a></p>
+                        <?php
+                        $redirect_url = isset($_GET['redirect_url']) ? '?redirect_url=' . urlencode($_GET['redirect_url']) : '';
+                        ?>
+                        <p class="text-center mt-3">
+                            Don't have an account? <a href="../signup/<?php echo $redirect_url; ?>">Sign Up</a>
+                        </p>
                     </div>
                 </div>
             </div>
