@@ -28,7 +28,6 @@
             position: relative;
         }
 
-        /* Background stars animation */
         body::before {
             content: '';
             position: absolute;
@@ -59,7 +58,6 @@
             }
         }
 
-        /* Ninja shuriken background */
         body::after {
             content: '\f0c4';
             font-family: 'Font Awesome 6 Free';
@@ -406,9 +404,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        // Store games in memory (simulating a database)
-        let games = JSON.parse(localStorage.getItem('blackNinjaGames')) || [];
-
         document.getElementById('createBtn').addEventListener('click', generateGameLink);
 
         function generateGameLink(event) {
@@ -416,7 +411,6 @@
             const timestamp = Date.now();
             const gameLink = `${window.location.origin}/game/link=${gameId}-${timestamp.toString().slice(-10)}`;
 
-            // Send to server
             fetch('create_game.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -436,12 +430,7 @@
                             timer: 2000,
                             timerProgressBar: true
                         });
-
-                        // Add to games list
-                        games.push({ link: gameLink, timestamp });
-                        localStorage.setItem('blackNinjaGames', JSON.stringify(games));
-                        renderGames();
-
+                        fetchGames();
                         createParticles(event);
                     } else {
                         Swal.fire({
@@ -460,6 +449,36 @@
                         icon: 'error',
                         title: 'Error',
                         text: 'Network error occurred. Please try again.',
+                        background: '#000000',
+                        color: '#e0e0e0',
+                        confirmButtonColor: '#ff0000'
+                    });
+                });
+        }
+
+        function fetchGames() {
+            fetch('get_games.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        renderGames(data.data);
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Failed to fetch games. Please try again.',
+                            background: '#000000',
+                            color: '#e0e0e0',
+                            confirmButtonColor: '#ff0000'
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Network error occurred while fetching games.',
                         background: '#000000',
                         color: '#e0e0e0',
                         confirmButtonColor: '#ff0000'
@@ -533,14 +552,15 @@
             }
         }
 
-        function renderGames() {
+        function renderGames(games) {
             const myGames = document.getElementById('my-games');
             myGames.innerHTML = '<h3>Previous Games</h3>';
 
-            games.forEach((game, index) => {
+            games.forEach((item, index) => {
+                const game = item.game;
                 const gameItem = document.createElement('div');
                 gameItem.classList.add('game-item');
-                const date = new Date(game.timestamp);
+                const date = new Date(game.created_at);
                 const formattedTime = date.toLocaleString('en-US', {
                     month: 'short',
                     day: 'numeric',
@@ -562,7 +582,7 @@
                         <button class="btn btn-small" onclick="viewGame('${game.link}')">
                             <i class="fas fa-eye icon"></i>View
                         </button>
-                        <button class="btn btn-danger btn-small" onclick="deleteGame(${index})">
+                        <button class="btn btn-danger btn-small" onclick="deleteGame(${game.id}, this)">
                             <i class="fas fa-trash icon"></i>Delete
                         </button>
                     </div>
@@ -578,15 +598,54 @@
             createParticles({ currentTarget: document.querySelector('.game-actions .btn') });
         }
 
-        function deleteGame(index) {
-            games.splice(index, 1);
-            localStorage.setItem('blackNinjaGames', JSON.stringify(games));
-            renderGames();
-            createParticles({ currentTarget: document.querySelector('.game-actions .btn-danger') });
+        function deleteGame(gameId, button) {
+            fetch('delete_game.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: gameId })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Game Deleted!',
+                            text: 'The game link has been successfully deleted.',
+                            background: '#000000',
+                            color: '#e0e0e0',
+                            confirmButtonColor: '#ff0000',
+                            confirmButtonText: 'OK',
+                            timer: 2000,
+                            timerProgressBar: true
+                        });
+                        fetchGames();
+                        createParticles({ currentTarget: button });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Failed to delete game. Please try again.',
+                            background: '#000000',
+                            color: '#e0e0e0',
+                            confirmButtonColor: '#ff0000'
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Network error occurred while deleting game.',
+                        background: '#000000',
+                        color: '#e0e0e0',
+                        confirmButtonColor: '#ff0000'
+                    });
+                });
         }
 
-        // Initial render
-        renderGames();
+        // Initial fetch
+        fetchGames();
     </script>
 </body>
 
