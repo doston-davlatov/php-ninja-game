@@ -703,7 +703,7 @@
         }
 
         function fetchGames() {
-            fetch('game/get.php')
+            fetch('game/get_games.php')
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {

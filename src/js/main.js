@@ -133,12 +133,10 @@ function saveScore() {
 // Fetch and display scores in the modal
 function fetchScores() {
     fetch('./get_scores.php?game_id=' + game_id)
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(scores) {
+        .then(response => response.json())
+        .then(scores => {
             scoreTableBody.innerHTML = '';
-            scores.forEach(function(score) {
+            scores.forEach(function (score) {
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${score.name || 'Unknown'}</td>
@@ -149,7 +147,7 @@ function fetchScores() {
                 scoreTableBody.appendChild(row);
             });
         })
-        .catch(function(err) {
+        .catch(function (err) {
             console.error('Error fetching scores:', err);
             scoreTableBody.innerHTML = '<tr><td colspan="4">Error loading scores</td></tr>';
         });
