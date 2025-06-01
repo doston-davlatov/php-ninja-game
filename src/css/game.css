@@ -18,48 +18,6 @@ body {
   position: relative;
 }
 
-.result {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  z-index: 100;
-}
-
-#score,
-#time {
-  font-family: 'Arial', sans-serif;
-  font-size: 1.5em;
-  font-weight: 900;
-  color: #fff;
-  text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-  padding: 10px 15px;
-  border-radius: 8px;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(5px);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
-}
-
-#score::before {
-  content: "★ ";
-  color: #FFD700;
-}
-
-#time::before {
-  content: "⏱ ";
-  color: #00BFFF;
-}
-
-.perfect-score #score {
-  animation: pulse 0.5s infinite alternate;
-  color: #FFD700;
-  background: rgba(106, 13, 173, 0.7);
-}
-
 @keyframes pulse {
   from {
     transform: scale(1);
@@ -158,25 +116,72 @@ body {
   z-index: 100;
 }
 
-.leaderboard-button::before {
-  content: "🏆 ";
+#score {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-family: 'Arial', sans-serif;
+  font-size: 1.2em;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  padding: 10px 15px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+}
+
+#time {
+  position: absolute;
+  top: 80px;
+  right: 20px;
+  font-family: 'Arial', sans-serif;
+  font-size: 1.2em;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  padding: 10px 15px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  z-index: 100;
 }
 
 .home-a::before {
   content: "🏠 ";
 }
 
-.leaderboard-button:hover {
+.leaderboard-button::before {
+  content: "🏆 ";
+}
+
+#score::before {
+  content: "★ ";
+  color: #FFD700;
+}
+
+#time::before {
+  content: "⏱ ";
+  color: #00BFFF;
+}
+
+.leaderboard-button:hover,
+.home-a:hover,
+#score:hover,
+#time:hover {
   background: rgba(30, 30, 30, 0.8);
   transform: translateY(-2px);
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-.home-a:hover {
-  background: rgba(30, 30, 30, 0.8);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
+
 
 .score-modal {
   display: none;
@@ -249,11 +254,6 @@ body {
 }
 
 @media (max-width: 768px) {
-  .result {
-    top: 10px;
-    right: 10px;
-  }
-
   #restart {
     font-size: 1em;
     height: 45px;
@@ -264,12 +264,10 @@ body {
     padding: 10px;
   }
 
-  .leaderboard-button {
-    font-size: 1em;
-    padding: 8px 12px;
-  }
-
-  .home-a {
+  .leaderboard-button,
+  .home-a,
+  #score,
+  #time {
     font-size: 1em;
     padding: 8px 12px;
   }

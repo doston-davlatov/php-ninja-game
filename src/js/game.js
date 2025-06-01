@@ -197,7 +197,13 @@ window.addEventListener("keydown", function (event) {
 });
 
 window.addEventListener("mousedown", function (event) {
-    if (phase === "waiting" && event.target !== homeA && event.target !== leaderboardBHomeutton && !scoreModal.contains(event.target)) {
+    const excludedElements = [homeA, timeElement, scoreElement, leaderboardButton];
+
+    if (
+        phase === "waiting" &&
+        !excludedElements.includes(event.target) &&
+        !scoreModal.contains(event.target)
+    ) {
         if (!gameStartTime) {
             gameStartTime = Date.now();
         }
