@@ -516,5 +516,11 @@ function getTreeY(x, baseHeight, amplitude) {
     return Math.sinus(x) * amplitude + sineBaseY;
 }
 
+function goHome() {
+    if (confirm("Go to home page?")) {
+        location.href = "../";
+    }
+}
+
 resetGame();
 window.requestAnimationFrame(animate);

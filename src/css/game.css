@@ -93,7 +93,6 @@ body {
   backdrop-filter: blur(5px);
   border: 2px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  text-decoration: none;
 }
 
 .leaderboard-button {
@@ -226,6 +225,11 @@ body {
   padding: 10px;
   text-align: left;
   border-bottom: 1px solid #ddd;
+}
+
+.score-table td:nth-child(3) {
+  font-weight: bold;
+  color: #b357f4;
 }
 
 .score-table th {

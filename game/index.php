@@ -36,7 +36,7 @@ $game_id = $game[0]['id'];
 <body>
     <div class="container">
         <button class="leaderboard-button" id="leaderboard-button">All Scores</button>
-        <a class="home-a" id="home-a" href="../">Home</a>
+        <button class="home-a" id="home-a" onclick="goHome()">Home</button>
 
         <div class="score-modal" id="score-modal">
             <div class="score-modal-content">
