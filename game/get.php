@@ -1,24 +1,28 @@
 <?php
+session_start();
 header('Content-Type: application/json');
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header('Location: ./login/');
+    exit;
+}
+
+include "../config.php";
+$db = new Database();
+
+$user_id = $_SESSION['user']['id'];
+
+$games = $db->select(
+    'games',
+    '*',
+    'user_id = ? ORDER BY created_at DESC',
+    [$user_id],
+    'i'
+);
 
 echo json_encode([
     'success' => true,
     'message' => 'Games fetched successfully!',
-    'data' => [
-        [
-            'id' => 1,
-            'user_id' => 1,
-            'player_number' => 5,
-            'link' => 'https://example.com/game',
-            'created_at' => date('Y-m-d H:i:s')
-        ],
-        [
-            'id' => 2,
-            'user_id' => 2,
-            'player_number' => 10,
-            'link' => 'https://example.com/game2',
-            'created_at' => date('Y-m-d H:i:s')
-        ]
-    ]
+    'data' => $games
 ]);
 exit;

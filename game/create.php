@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$user_id = $_SESSION['user']['id'] ?? null;
+$user_id = $_SESSION['user']['id'];
 $link = $_POST['link'] ?? '';
 $created_at = date('Y-m-d H:i:s');
 
@@ -31,7 +31,7 @@ if (empty($link)) {
 }
 
 $inserted = $db->insert('games', [
-    'user_id' => 1,
+    'user_id' => $user_id,
     'link' => $link,
     'created_at' => $created_at
 ]);
@@ -47,3 +47,4 @@ if ($inserted) {
         'message' => 'Database insert failed'
     ]);
 }
+exit;
